@@ -1,1 +1,1 @@
-import {Lens, Arrays} from "@atomic-object/lenses";
+import { Lens, Arrays } from "@atomic-object/lenses";

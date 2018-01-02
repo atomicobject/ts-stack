@@ -1,13 +1,16 @@
 {
-	"devDependencies": {
-		"execa": "0.8.0",
-		"lerna": "^2.5.1",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
     "@types/jest": "^20.0.8",
     "@types/lodash": "^4.14.74",
-    "jest": "^20.0.4",
-    "jsverify": "^0.8.2",
+    "execa": "0.8.0",
+    "lerna": "^2.5.1",
     "lodash": "^4.17.4",
+    "rimraf": "^2.6.2",
     "ts-jest": "^20.0.11",
-    "typescript": "^2.4.2"
-	}
+    "typescript": "^2.6.2"
+  }
 }

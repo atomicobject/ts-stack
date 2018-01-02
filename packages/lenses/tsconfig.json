@@ -5,5 +5,9 @@
     "target": "es5",
     "rootDir": "src",
     "outDir": "es"
-  }
+  },
+  "exclude": [
+    "es",
+    "commonjs"
+  ]
 }

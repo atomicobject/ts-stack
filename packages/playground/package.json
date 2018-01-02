@@ -1,7 +1,10 @@
 {
   "name": "playground",
   "private": true,
-  "devDependencies": {
+  "dependencies": {
     "@atomic-object/lenses": "^0.1.4"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.2"
   }
 }

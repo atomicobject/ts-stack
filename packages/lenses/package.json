@@ -12,9 +12,9 @@
     "build:commonjs": "tsc -p ./tsconfig.commonjs.json",
     "clean": "rimraf es lib"
   },
-  "main": "lib/index.js",
+  "main": "commonjs/index.js",
   "module": "es/index.js",
-  "typings": "lib/index",
+  "typings": "es/index",
   "directories": {
     "lib": "./lib"
   },
@@ -22,14 +22,12 @@
     "lib",
     "es"
   ],
-  "npmFileMap": [
-    {
-      "basePath": "/lib/",
-      "files": [
-        "*.js"
-      ]
-    }
-  ],
+  "npmFileMap": [{
+    "basePath": "/lib/",
+    "files": [
+      "*.js"
+    ]
+  }],
   "jest": {
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
@@ -48,7 +46,8 @@
     "jest": "^20.0.4",
     "jsverify": "^0.8.2",
     "lodash": "^4.17.4",
+    "rimraf": "^2.6.2",
     "ts-jest": "^20.0.11",
-    "typescript": "^2.4.2"
+    "typescript": "^2.6.2"
   }
 }

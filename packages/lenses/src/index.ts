@@ -1,3 +1,5 @@
+export {Arrays} from './arrays'
+
 /** Given an object, a sequence of keys, and a value, deep update that value by recursively copying. Type safe. */
 let _generalUpdater = makeUpdater();
 export const updateIn: SafeUpdate = function(o: any, ...args: any[]) {
@@ -171,7 +173,7 @@ export interface SafeUpdate {
 
 /** Factory to create monomorphic composed setters */
 function makeComposedSetter() {
-  const performComposedSet = (o: any, v: any, lenses: ILens<any, any>[], index: number) => {
+  const performComposedSet = (o: any, v: any, lenses: ILens<any, any>[], index: number):any => {
     if (index == lenses.length - 1) {
       return lenses[index].set(o, v);
     } else {

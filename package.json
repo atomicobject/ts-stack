@@ -1,6 +1,13 @@
 {
 	"devDependencies": {
 		"execa": "0.8.0",
-		"lerna": "^2.5.1"
+		"lerna": "^2.5.1",
+    "@types/jest": "^20.0.8",
+    "@types/lodash": "^4.14.74",
+    "jest": "^20.0.4",
+    "jsverify": "^0.8.2",
+    "lodash": "^4.17.4",
+    "ts-jest": "^20.0.11",
+    "typescript": "^2.4.2"
 	}
 }

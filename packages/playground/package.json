@@ -1,0 +1,7 @@
+{
+  "name": "playground",
+  "private": true,
+  "devDependencies": {
+    "@atomic-object/lenses": "^0.1.4"
+  }
+}

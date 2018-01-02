@@ -1,6 +1,4 @@
-*.d.ts
-*.js
-*.js.map
 node_modules
 lib
+es
 .DS_Store

@@ -1,8 +1,9 @@
 {
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "watch": "lerna run --parallel watch"
+  },
   "devDependencies": {
     "@types/jest": "^20.0.8",
     "@types/lodash": "^4.14.74",

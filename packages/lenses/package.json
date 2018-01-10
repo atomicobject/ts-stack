@@ -10,6 +10,7 @@
     "build": "yarn build:es && yarn build:commonjs",
     "build:es": "tsc",
     "build:commonjs": "tsc -p ./tsconfig.commonjs.json",
+    "watch": "nodemon -w src -x 'yarn build'",
     "clean": "rimraf es lib"
   },
   "main": "commonjs/index.js",
@@ -46,6 +47,7 @@
     "jest": "^20.0.4",
     "jsverify": "^0.8.2",
     "lodash": "^4.17.4",
+    "nodemon": "^1.14.10",
     "rimraf": "^2.6.2",
     "ts-jest": "^20.0.11",
     "typescript": "^2.6.2"

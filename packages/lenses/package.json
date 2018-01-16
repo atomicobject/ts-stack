@@ -19,34 +19,21 @@
   "directories": {
     "lib": "./lib"
   },
-  "files": [
-    "lib",
-    "es"
+  "files": ["lib", "es"],
+  "npmFileMap": [
+    {
+      "basePath": "/lib/",
+      "files": ["*.js"]
+    }
   ],
-  "npmFileMap": [{
-    "basePath": "/lib/",
-    "files": [
-      "*.js"
-    ]
-  }],
-  "jest": {
-    "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$",
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "ts",
-      "tsx"
-    ]
-  },
   "devDependencies": {
     "@types/jest": "^20.0.8",
     "@types/lodash": "^4.14.74",
+    "@types/lodash-es": "^4.17.0",
     "jest": "^20.0.4",
     "jsverify": "^0.8.2",
     "lodash": "^4.17.4",
+    "lodash-es": "^4.17.4",
     "nodemon": "^1.14.10",
     "rimraf": "^2.6.2",
     "ts-jest": "^20.0.11",

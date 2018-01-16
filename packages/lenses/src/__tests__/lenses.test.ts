@@ -1,5 +1,5 @@
 import { Lens, Prism, Isomorphism } from "../index";
-import { flow } from "lodash";
+import { flow } from "lodash-es";
 
 describe("Lens", () => {
   describe("an instance/.of()", () => {
@@ -98,7 +98,7 @@ describe("Lens", () => {
     });
 
     it("Supports potentially-undefined values", () => {
-      type Something = { foo: number|undefined; bar: string };
+      type Something = { foo: number | undefined; bar: string };
       const Something = {
         foo: Lens.from<Something>().prop("foo"),
         bar: Lens.from<Something>().prop("bar")
@@ -109,8 +109,9 @@ describe("Lens", () => {
       expect(Something.foo(o)).toBe(1);
 
       expect(Something.foo.set(o, undefined)).toEqual({
-        foo: undefined, bar: "hello"
-      })
+        foo: undefined,
+        bar: "hello"
+      });
     });
 
     it("can update deeply nested structures, type-safely", () => {

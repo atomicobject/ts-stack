@@ -54,16 +54,15 @@ class LoaderFactory<
     private repo: RepositoryBase<UnsavedDestType, SavedDestType, DestId>
   ) {}
   findOneBy<K extends keyof SavedDestType>(targetKey: K) {
-    return new DataLoader<
-      SavedDestType[K],
-      SavedDestType | null
-    >(async keyValues => {
-      const entries: SavedDestType[] = await this.repo
-        .table()
-        .whereIn(targetKey, keyValues as any);
-      const table = keyBy(entries, targetKey);
-      return keyValues.map(val => table[val.toString()] || null);
-    });
+    return new DataLoader<SavedDestType[K], SavedDestType | null>(
+      async keyValues => {
+        const entries: SavedDestType[] = await this.repo
+          .table()
+          .whereIn(targetKey, keyValues as any);
+        const table = keyBy(entries, targetKey);
+        return keyValues.map(val => table[val.toString()] || null);
+      }
+    );
   }
 
   /** Analogous to has_many in Rails */
@@ -75,21 +74,22 @@ class LoaderFactory<
   >(record: RecordInfo<UnsavedSourceT, SavedSourceT, SourceId>, foreignKey: K) {
     type SourceRecord = SavedR<typeof record>;
     type IdType = IdTypeR<typeof record>;
-    return new DataLoader<
-      SourceRecord | IdType,
-      SavedDestType[]
-    >(async args => {
-      const ids: IdType[] = args.map(
-        arg =>
-          typeof arg === "object"
-            ? (arg as SourceRecord)[record.idKey] as IdType
-            : arg
-      );
-      const records = await this.repo.table().whereIn(foreignKey, ids as any[]);
-      const table = groupBy<SavedDestType>(records, foreignKey);
-      const ordered = ids.map(id => table[(id as any).toString()] || []);
-      return ordered;
-    });
+    return new DataLoader<SourceRecord | IdType, SavedDestType[]>(
+      async args => {
+        const ids: IdType[] = args.map(
+          arg =>
+            typeof arg === "object"
+              ? ((arg as SourceRecord)[record.idKey] as IdType)
+              : arg
+        );
+        const records = await this.repo
+          .table()
+          .whereIn(foreignKey, ids as any[]);
+        const table = groupBy<SavedDestType>(records, foreignKey);
+        const ordered = ids.map(id => table[(id as any).toString()] || []);
+        return ordered;
+      }
+    );
   }
 
   /** Analogous to has_one in Rails */
@@ -103,7 +103,7 @@ class LoaderFactory<
       const ids: FkType[] = args.map(
         arg =>
           typeof arg === "object"
-            ? (arg as SourceRecord)[record.idKey] as FkType
+            ? ((arg as SourceRecord)[record.idKey] as FkType)
             : arg
       );
       const records = await this.repo.table().whereIn(foreignKey, ids as any[]);
@@ -128,7 +128,7 @@ class LoaderFactory<
       const ids: FkType[] = args.map(
         arg =>
           typeof arg === "object"
-            ? (arg as SavedSource)[sourceKey] as FkType
+            ? ((arg as SavedSource)[sourceKey] as FkType)
             : arg
       );
       const records = await this.repo

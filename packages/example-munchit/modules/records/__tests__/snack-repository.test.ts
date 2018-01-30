@@ -1,11 +1,6 @@
-import { SnackRepository } from "records/snack-record";
-import { getConnection, destroyConnection } from "db";
-import { VoteRepository } from "records/vote-record";
-import { withTransactionalConnection, withContext } from "__tests__/db-helpers";
+import { withContext } from "__tests__/db-helpers";
 
 describe("SnackRepository", () => {
-  const knex = getConnection();
-
   it(
     "Can insert and find records",
     withContext(async ctx => {

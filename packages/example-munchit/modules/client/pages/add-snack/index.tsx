@@ -16,7 +16,9 @@ function mapDispatchToProps(
 ): {} {
   return {
     onSubmit(form: CompletedForm) {
-      addSnackMutation(props.client, form);
+      addSnackMutation(props.client, form).catch(() => {
+        /* ignored */
+      });
     }
   };
 }

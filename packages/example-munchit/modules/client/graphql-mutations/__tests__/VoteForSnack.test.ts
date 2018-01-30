@@ -7,7 +7,7 @@ describe("Vote mutation", () => {
     withContext(async context => {
       const graphql = context.apolloClient;
 
-      const snack = await context.snackRepository.insert({ name: "Foo" });
+      const snack = await context.repos.snacks.insert({ name: "Foo" });
       const result = await voteForSnackMutation(graphql, {
         id: snack.id,
         voteCount: 32

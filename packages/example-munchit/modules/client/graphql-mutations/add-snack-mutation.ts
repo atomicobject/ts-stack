@@ -25,8 +25,6 @@ export function addSnackMutation(
       }
     } as AddSnackMutation,
 
-    refetchQueries: [
-      { query: require("client/graphql-queries/DashboardSnacks.graphql") }
-    ]
+    refetchQueries: ["DashboardSnacks"]
   });
 }

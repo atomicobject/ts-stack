@@ -16,8 +16,8 @@ export const VoteResolvers = {
     if (minimalVote.snack) {
       return minimalVote.snack;
     } else {
-      const vote = await context.voteRepository.findById.load(minimalVote.id);
-      return await context.snackRepository.forVote.load(vote!.snackId);
+      const vote = await context.repos.votes.findById.load(minimalVote.id);
+      return await context.repos.snacks.forVote.load(vote!.snackId);
     }
   }
 };

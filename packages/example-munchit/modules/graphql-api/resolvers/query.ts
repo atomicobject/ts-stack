@@ -8,7 +8,7 @@ export const QueryResolvers = {
     args: {},
     context: Context
   ): Promise<MinimalSnack[]> {
-    const snacks = await context.snackRepository.all();
+    const snacks = await context.repos.snacks.all();
     return sortBy(snacks, "name");
   }
 };

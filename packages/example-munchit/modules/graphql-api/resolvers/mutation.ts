@@ -13,9 +13,9 @@ export const MutationResolvers = {
     context: Context
   ): Promise<MinimalSnack | null> {
     try {
-      return await context.snackRepository.insert(args);
+      return await context.repos.snacks.insert(args);
     } catch (e) {
-      const dupe = await context.snackRepository.byName.load(args.name);
+      const dupe = await context.repos.snacks.byName.load(args.name);
       return dupe || null;
     }
   },
@@ -25,7 +25,7 @@ export const MutationResolvers = {
     args: VoteForMutationArgs,
     context: Context
   ): Promise<MinimalVote> {
-    const vote = await context.voteRepository.insert(args);
+    const vote = await context.repos.votes.insert(args);
     return { id: vote.id, snack: { id: vote.snackId } };
   }
 };

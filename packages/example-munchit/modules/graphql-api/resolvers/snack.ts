@@ -10,11 +10,11 @@ export const SnackResolvers = {
   async name(snack: MinimalSnack, args: {}, context: Context) {
     if ((snack as any).name) return (snack as any).name;
 
-    const record = await context.snackRepository.findById.load(snack.id);
+    const record = await context.repos.snacks.findById.load(snack.id);
     return record && record.name;
   },
 
   async voteCount(snack: MinimalSnack, args: {}, context: Context) {
-    return await context.voteRepository.countForSnack.load(snack.id);
+    return await context.repos.votes.countForSnack.load(snack.id);
   }
 };

@@ -7,10 +7,10 @@ describe("Dashboard snack query", () => {
     withContext(async context => {
       const graphql = context.apolloClient;
 
-      const snack = await context.snackRepository.insert({ name: "Foo" });
+      const snack = await context.repos.snacks.insert({ name: "Foo" });
       await Promise.all([
-        context.voteRepository.insert({ snackId: snack.id }),
-        context.voteRepository.insert({ snackId: snack.id })
+        context.repos.votes.insert({ snackId: snack.id }),
+        context.repos.votes.insert({ snackId: snack.id })
       ]);
 
       const result = await graphql.query<DashboardSnacksQuery>({

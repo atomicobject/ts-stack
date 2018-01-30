@@ -9,7 +9,7 @@ module.exports = {
       {
         loader: "awesome-typescript-loader",
         query: {
-          configFileName: "./tsconfig.json"
+          configFileName: path.join(__dirname, "../tsconfig.json")
         }
       }
     ]

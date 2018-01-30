@@ -3,13 +3,15 @@
   "compilerOptions": {
     "allowJs": true,
     "baseUrl": "./modules",
+    "declaration": false,
     "jsx": "react",
     "lib": ["dom", "es6", "es2015", "es2016", "es2017"],
     "module": "commonjs",
     "outDir": "es",
-    "rootDir": "src",
     "skipLibCheck": true,
+    "noUnusedLocals": false,
     "sourceMap": true,
+    "strictFunctionTypes": false,
     "target": "es5"
   }
 }

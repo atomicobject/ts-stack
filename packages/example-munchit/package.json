@@ -51,7 +51,8 @@
     "fmt": "yarn fmt:prettier; yarn lint:fix",
     "pretest": "yarn lint",
     "test": "yarn test:unit && yarn test:acceptance",
-    "test:unit": "jest -w1",
+    "test:truncate": "NODE_ENV=test node dist/scripts/truncate-database.js",
+    "test:unit": "yarn test:truncate && NODE_ENV=test jest --forceExit",
     "test:unit:debug": "node --debug-brk ./node_modules/.bin/jest --runInBand",
     "test:acceptance":
       "if [ $BUILD ]; then yarn test:acceptance:build; fi; concurrently --kill-others -s first 'yarn test:acceptance:server' 'yarn test:acceptance:run'",

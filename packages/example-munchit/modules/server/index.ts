@@ -12,7 +12,8 @@ const knexLogger = require("knex-logger");
 const enforce = require("express-sslify");
 const expressStaticGzip = require("express-static-gzip");
 
-import { executableSchema, buildContext } from "graphql-api";
+import { executableSchema } from "graphql-api";
+import { Context } from "graphql-api/context";
 
 let app = express();
 
@@ -50,7 +51,7 @@ export function startServer() {
 
       // Create the context for the request. Get auth info from `req`
       // if necessary
-      context: buildContext(executableSchema)
+      context: new Context()
     }))
   );
 

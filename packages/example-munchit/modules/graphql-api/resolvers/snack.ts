@@ -1,5 +1,5 @@
 import { Snack } from "graphql-api/schema-types";
-import { Context } from "graphql-api";
+import { Context } from "graphql-api/context";
 
 /** The graphql schema-compatible typescript type required to implement any snack resolver */
 export interface MinimalSnack {

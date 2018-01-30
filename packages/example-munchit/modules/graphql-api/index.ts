@@ -1,5 +1,4 @@
 export { SchemaMap } from "./schema-base";
-export { buildContext, Context } from "./context";
 import { default as resolvers } from "./resolvers";
 
 import { rawSchema } from "./schema-base";

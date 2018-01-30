@@ -1,39 +1,38 @@
-import { Context, buildContext } from "graphql-api";
-import { Knex, destroyConnection } from "db";
+import * as db from "db";
+import { Context } from "graphql-api/context";
 
-export async function truncateAll(knexOrContext: Knex | Context) {
-  const knex =
-    knexOrContext instanceof Context ? knexOrContext.pg : knexOrContext;
-  const result = await knex.raw(`
-      SELECT table_name
-      FROM information_schema.tables
-      WHERE table_schema='public'
-      AND table_type='BASE TABLE';
-   `);
-  const tables: string[] = result.rows.map((r: any) => r.table_name);
-  const recordTables = tables.filter(t => !t.includes("knex"));
-
-  const promises = recordTables.map(tableName => {
+export function withTransactionalConnection(
+  fn: (knex: db.Knex) => Promise<any>
+) {
+  return async () => {
+    const knex = db.getConnection();
     try {
-      // console.log(`Truncating ${tableName}`);
-      return knex.raw(`TRUNCATE ${tableName} CASCADE`);
+      await knex.transaction(async trx => {
+        await trx.raw("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+        db._setConnection(trx);
+        // await truncateAll(context);
+        await fn(trx);
+        throw "abort transaction";
+      });
     } catch (e) {
-      console.error(e);
+      if (e !== "abort transaction") {
+        throw e;
+      }
+    } finally {
+      db._setConnection(knex);
     }
-  });
-  await Promise.all(promises);
+  };
 }
 
 export function withContext(
   fn: (context: Context) => void | any
 ): () => Promise<any> {
-  return async () => {
-    const context = buildContext();
-    await truncateAll(context);
-    try {
-      await fn(context);
-    } finally {
-      await destroyConnection();
-    }
-  };
+  return withTransactionalConnection(async db => {
+    const context = new Context(db);
+    await fn(context);
+  });
 }
+
+afterAll(async () => {
+  await db.destroyConnection();
+});

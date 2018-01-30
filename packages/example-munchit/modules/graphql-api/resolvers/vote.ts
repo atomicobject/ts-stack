@@ -1,6 +1,6 @@
 import { Vote } from "graphql-api/schema-types";
 import { MinimalSnack } from "graphql-api/resolvers/snack";
-import { Context } from "graphql-api";
+import { Context } from "graphql-api/context";
 
 export interface MinimalVote {
   id: Vote["id"];

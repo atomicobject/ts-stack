@@ -29,3 +29,28 @@ export function getConnection() {
   }
   return <knexModule>$connection;
 }
+
+export function _setConnection(knex: Knex) {
+  $connection = knex;
+}
+
+export async function truncateAll(knex: Knex) {
+  const result = await knex.raw(`
+      SELECT table_name
+      FROM information_schema.tables
+      WHERE table_schema='public'
+      AND table_type='BASE TABLE';
+   `);
+  const tables: string[] = result.rows.map((r: any) => r.table_name);
+  const recordTables = tables.filter(t => !t.includes("knex"));
+
+  const promises = recordTables.map(tableName => {
+    try {
+      // console.log(`Truncating ${tableName}`);
+      return knex.raw(`TRUNCATE "${tableName}" CASCADE`);
+    } catch (e) {
+      console.error(e);
+    }
+  });
+  await Promise.all(promises);
+}

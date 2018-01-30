@@ -3,8 +3,8 @@ import {
   VoteForMutationArgs
 } from "graphql-api/schema-types";
 import { MinimalSnack } from "graphql-api/resolvers/snack";
-import { Context } from "graphql-api";
 import { MinimalVote } from "graphql-api/resolvers/vote";
+import { Context } from "graphql-api/context";
 
 export const MutationResolvers = {
   async addSnack(

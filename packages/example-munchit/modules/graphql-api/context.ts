@@ -11,6 +11,7 @@ import * as db from "../db";
 import { executableSchema } from "./index";
 import { SnackRepository } from "records/snack-record";
 import { VoteRepository } from "records/vote-record";
+import { Transaction } from "knex";
 
 export function buildLocalApollo(schema: GraphQLSchema = executableSchema) {
   return new Context().apolloClient;
@@ -18,7 +19,10 @@ export function buildLocalApollo(schema: GraphQLSchema = executableSchema) {
 
 /** The graphql context type for this app.  */
 export class Context {
-  constructor(schema: GraphQLSchema = executableSchema) {
+  constructor(
+    public pg: db.Knex = db.getConnection(),
+    schema: GraphQLSchema = executableSchema
+  ) {
     this.apolloClient = new ApolloClient({
       ssrMode: true,
       networkInterface: createLocalInterface(graphql, schema, {
@@ -35,14 +39,30 @@ export class Context {
   apolloClient: ApolloClient;
 
   // TODO: Perhaps compose this in?
-  pg = db.getConnection();
   snackRepository = new SnackRepository(this.pg);
   voteRepository = new VoteRepository(this.pg);
+  repos = new Repositories(this.pg);
 }
 
-/** Builds a new empty context for a request. */
-export function buildContext(
-  schema: GraphQLSchema = executableSchema
-): Context {
-  return new Context(schema);
+export class Repositories {
+  constructor(public pg: db.Knex) {}
+
+  transaction(
+    func: (repos: Repositories, transaction: Transaction) => Promise<any>
+  ): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await this.pg.transaction(async trx => {
+          return await func(new Repositories(trx), trx);
+        });
+
+        resolve(result);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
+  snacks = new SnackRepository(this.pg);
+  votes = new VoteRepository(this.pg);
 }

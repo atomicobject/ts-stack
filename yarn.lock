@@ -264,6 +264,12 @@
   version "0.0.32"
   resolved "https://registry.yarnpkg.com/@types/config/-/config-0.0.32.tgz#c106055802d78e234e28374adc4dad460d098558"
 
+"@types/connect@*":
+  version "3.4.31"
+  resolved "https://registry.yarnpkg.com/@types/connect/-/connect-3.4.31.tgz#1f92d6b117ecc05076c49ecd024f7976e528bad9"
+  dependencies:
+    "@types/node" "*"
+
 "@types/cors@^2.8.1":
   version "2.8.3"
   resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.3.tgz#eaf6e476da0d36bee6b061a24d57e343ddce86d6"
@@ -282,6 +288,10 @@
   dependencies:
     "@types/cheerio" "*"
     "@types/react" "*"
+
+"@types/events@*":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/events/-/events-1.1.0.tgz#93b1be91f63c184450385272c47b6496fd028e02"
 
 "@types/express-serve-static-core@*":
   version "4.11.0"
@@ -308,6 +318,21 @@
 "@types/history@*":
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/@types/history/-/history-4.6.2.tgz#12cfaba693ba20f114ed5765467ff25fdf67ddb0"
+
+"@types/http-proxy-middleware@*":
+  version "0.17.2"
+  resolved "https://registry.yarnpkg.com/@types/http-proxy-middleware/-/http-proxy-middleware-0.17.2.tgz#78dde05402faa5f09cfe83807a64541022628429"
+  dependencies:
+    "@types/connect" "*"
+    "@types/http-proxy" "*"
+    "@types/node" "*"
+
+"@types/http-proxy@*":
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/@types/http-proxy/-/http-proxy-1.12.4.tgz#b13d8c1f6829e307de09286da0618d1141547d52"
+  dependencies:
+    "@types/events" "*"
+    "@types/node" "*"
 
 "@types/inline-style-prefixer@^3.0.0":
   version "3.0.1"
@@ -347,6 +372,12 @@
   resolved "https://registry.yarnpkg.com/@types/morgan/-/morgan-1.7.35.tgz#6358f502931cc2583d7a94248c41518baa688494"
   dependencies:
     "@types/express" "*"
+
+"@types/mz@^0.0.32":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@types/mz/-/mz-0.0.32.tgz#e8248b4e41424c052edc1725dd33650c313a3659"
+  dependencies:
+    "@types/node" "*"
 
 "@types/node@*":
   version "9.3.0"
@@ -413,6 +444,12 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
+"@types/spdy@*":
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/@types/spdy/-/spdy-3.4.4.tgz#3282fd4ad8c4603aa49f7017dd520a08a345b2bc"
+  dependencies:
+    "@types/node" "*"
+
 "@types/storybook__addon-actions@^3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@types/storybook__addon-actions/-/storybook__addon-actions-3.0.1.tgz#e76b6cc3e6221d6578962a2ae59c3c33b6762453"
@@ -436,13 +473,45 @@
     "@types/react" "*"
     "@types/webpack-env" "*"
 
+"@types/tapable@*":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-0.2.4.tgz#8181a228da46185439300e600c5ae3b3b3982585"
+
 "@types/throng@^4.0.0":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@types/throng/-/throng-4.0.2.tgz#e352f5f86433e9dfbf3258414191852d25b2274f"
 
+"@types/uglify-js@*":
+  version "2.6.30"
+  resolved "https://registry.yarnpkg.com/@types/uglify-js/-/uglify-js-2.6.30.tgz#257d2b6dd86673d60da476680fba90f2e30c6eef"
+  dependencies:
+    source-map "^0.6.1"
+
+"@types/webpack-dev-server@^2.9.2":
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/@types/webpack-dev-server/-/webpack-dev-server-2.9.2.tgz#8df8d34feb7d65b4b16f8b181cb9cd71103ee4d0"
+  dependencies:
+    "@types/express-serve-static-core" "*"
+    "@types/http-proxy-middleware" "*"
+    "@types/serve-static" "*"
+    "@types/spdy" "*"
+    "@types/webpack" "*"
+
 "@types/webpack-env@*":
   version "1.13.3"
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.13.3.tgz#0ecbe70f87341767793774d3683b51aa3246434c"
+
+"@types/webpack@*":
+  version "3.8.4"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-3.8.4.tgz#82069b43851ac7fdb94f96245758903c2a989107"
+  dependencies:
+    "@types/node" "*"
+    "@types/tapable" "*"
+    "@types/uglify-js" "*"
+
+"@types/yargs@^10.0.1":
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-10.0.1.tgz#f986e2b5d37f1fb8c13c0ed15f45d01bcc3fb3d6"
 
 JSONStream@^1.0.4:
   version "1.3.1"
@@ -596,6 +665,10 @@ ansi-styles@^3.0.0, ansi-styles@^3.1.0, ansi-styles@^3.2.0:
 ansi-styles@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-1.0.0.tgz#cb102df1c56f5123eab8b67cd7b98027a0279178"
+
+any-promise@^1.0.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/any-promise/-/any-promise-1.3.0.tgz#abc6afeedcea52e809cdc0376aed3ce39635d17f"
 
 anymatch@^1.3.0:
   version "1.3.2"
@@ -2666,7 +2739,7 @@ concat-stream@1.6.0, concat-stream@^1.4.10, concat-stream@^1.5.0:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
-concurrently@^3.5.0:
+concurrently@^3.5.0, concurrently@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/concurrently/-/concurrently-3.5.1.tgz#ee8b60018bbe86b02df13e5249453c6ececd2521"
   dependencies:
@@ -7068,6 +7141,14 @@ mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
+mz@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/mz/-/mz-2.7.0.tgz#95008057a56cafadc2bc63dde7f9ff6955948e32"
+  dependencies:
+    any-promise "^1.0.0"
+    object-assign "^4.0.1"
+    thenify-all "^1.0.0"
+
 nan@^2.3.0, nan@^2.3.2:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.8.0.tgz#ed715f3fe9de02b57a5e6252d90a96675e1f085a"
@@ -9971,6 +10052,18 @@ text-extensions@^1.0.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/text-extensions/-/text-extensions-1.7.0.tgz#faaaba2625ed746d568a23e4d0aacd9bf08a8b39"
 
+thenify-all@^1.0.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/thenify-all/-/thenify-all-1.6.0.tgz#1a1918d402d8fc3f98fbf234db0bcc8cc10e9726"
+  dependencies:
+    thenify ">= 3.1.0 < 4"
+
+"thenify@>= 3.1.0 < 4":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/thenify/-/thenify-3.3.0.tgz#e69e38a1babe969b0108207978b9f62b88604839"
+  dependencies:
+    any-promise "^1.0.0"
+
 throat@^3.0.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/throat/-/throat-3.2.0.tgz#50cb0670edbc40237b9e347d7e1f88e4620af836"
@@ -10883,6 +10976,12 @@ yargs-parser@^8.1.0:
   dependencies:
     camelcase "^4.1.0"
 
+yargs-parser@^9.0.2:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-9.0.2.tgz#9ccf6a43460fe4ed40a9bb68f48d43b8a68cc077"
+  dependencies:
+    camelcase "^4.1.0"
+
 yargs@6.6.0:
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-6.6.0.tgz#782ec21ef403345f830a808ca3d513af56065208"
@@ -10917,6 +11016,23 @@ yargs@^10.0.3:
     which-module "^2.0.0"
     y18n "^3.2.1"
     yargs-parser "^8.1.0"
+
+yargs@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-11.0.0.tgz#c052931006c5eee74610e5fc0354bedfd08a201b"
+  dependencies:
+    cliui "^4.0.0"
+    decamelize "^1.1.1"
+    find-up "^2.1.0"
+    get-caller-file "^1.0.1"
+    os-locale "^2.0.0"
+    require-directory "^2.1.1"
+    require-main-filename "^1.0.1"
+    set-blocking "^2.0.0"
+    string-width "^2.0.0"
+    which-module "^2.0.0"
+    y18n "^3.2.1"
+    yargs-parser "^9.0.2"
 
 yargs@^7.0.0, yargs@^7.0.2:
   version "7.1.0"

@@ -21,8 +21,8 @@ const scriptEntry = fs
 const entry = Object.assign(
   {
     server: "./entry/server.ts"
-  },
-  scriptEntry
+  }
+  // scriptEntry
 );
 console.log(entry);
 

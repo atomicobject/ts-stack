@@ -1,22 +1,20 @@
 {
-  "name": "@atomic-object/lenses",
-  "version": "0.1.4",
-  "description": "A lens library for TypeScript",
-  "repository": "https://github.com/atomicobject/lenses",
+  "name": "@atomic-object/cli",
+  "version": "0.1.0",
+  "description": "CLI Interface",
+  "repository": "https://github.com/atomicobject/cli",
   "author": "Atomic Object",
   "license": "MIT",
   "typeScriptVersion": "2.3",
   "scripts": {
-    "build": "yarn build:es && yarn build:commonjs",
-    "build:es": "tsc",
-    "build:commonjs": "tsc -p ./tsconfig.commonjs.json",
-    "watch": "nodemon -w src -x 'yarn build'",
+    "build": "yarn build:commonjs",
+    "build:commonjs": "tsc -p ./tsconfig.json",
+    "watch": "tsc -p ./tsconfig.json -w",
     "clean": "rimraf es lib"
   },
-  "sideEffects": false,
+  "bin": "commonjs/index.js",
   "main": "commonjs/index.js",
-  "module": "es/index.js",
-  "typings": "es/index",
+  "typings": "commonjs/index",
   "directories": {
     "lib": "./lib"
   },
@@ -39,5 +37,10 @@
     "rimraf": "^2.6.2",
     "ts-jest": "^20.0.11",
     "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "@types/yargs": "^10.0.1",
+    "concurrently": "^3.5.1",
+    "yargs": "^11.0.0"
   }
 }

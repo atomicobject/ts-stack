@@ -13,7 +13,7 @@
     "sourceMap": true,
     "strictFunctionTypes": false,
     "target": "es5",
-    "rootDir": ".",
-    "exclude": ["./dist"]
-  }
+    "rootDir": "."
+  },
+  "exclude": ["./dist", "./es"]
 }

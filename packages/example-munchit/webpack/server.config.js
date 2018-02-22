@@ -21,8 +21,8 @@ const scriptEntry = fs
 const entry = Object.assign(
   {
     server: "./entry/server.ts"
-  }
-  // scriptEntry
+  },
+  scriptEntry
 );
 console.log(entry);
 
@@ -36,7 +36,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "../dist"),
     filename: "[name].js",
-    devtoolModuleFilenameTemplate: "[absolute-resource-path]"
+    devtoolModuleFilenameTemplate: "[absolute-resource-path]",
+    libraryTarget: "commonjs2"
   },
 
   resolve: {

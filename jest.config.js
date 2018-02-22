@@ -11,6 +11,8 @@ module.exports = {
     "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js"
   },
   moduleDirectories: ["modules", "node_modules"],
+  globalSetup:
+    "./packages/example-munchit/dist/scripts/unit-test-before-all.js",
   globals: {
     "ts-jest": {
       tsConfigFile: "./tsconfig.jest.json"

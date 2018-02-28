@@ -9,6 +9,7 @@ export const WEBPACK_DEPENDENCIES: Dependencies = {
     "file-loader": "^0.11.1",
     "html-webpack-plugin": "^2.30.1",
     "postcss-loader": "^2.0.3",
+    "postcss-modules-local-by-default": "^1.1.1",
     "progress-bar-webpack-plugin": "^1.10.0",
     "sass-loader": "^6.0.3",
     "source-map-loader": "^0.2.1",
@@ -16,7 +17,8 @@ export const WEBPACK_DEPENDENCIES: Dependencies = {
     "url-loader": "^0.5.8",
     webpack: "^3.4.1",
     "webpack-node-externals": "^1.5.4",
-    "webpack-split-by-path": "^2.0.0"
+    "webpack-split-by-path": "^2.0.0",
+    autoprefixer: "^7.1.2"
   }
 };
 

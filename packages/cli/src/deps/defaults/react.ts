@@ -1,10 +1,6 @@
 import { Dependencies } from "../../types";
 
 export const REACT_DEPENDENCIES: Dependencies = {
-  // resolutions: {
-  //   "@types/react": "^15.6.5",
-  //   "@types/react-dom": "^15.5.2"
-  // },
   dependencies: {
     "@types/react": "^15.6.5",
     "@types/react-dom": "^15.5.2",
@@ -23,6 +19,7 @@ export const REACT_DEPENDENCIES: Dependencies = {
     "redux-saga": "^0.15.6"
   },
   devDependencies: {
+    "@storybook/addon-storyshots": "^3.2.11",
     "@storybook/addon-actions": "^3.2.0",
     "@storybook/addon-info": "^3.2.0",
     "@storybook/addon-knobs": "^3.2.0",

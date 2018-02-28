@@ -16,6 +16,7 @@ import { readPackageJson } from "./env";
 import WEBPACK_DEPENDENCIES from "./deps/defaults/webpack";
 import { REACT_DEPENDENCIES } from "./deps/defaults/react";
 import { GRAPHQL_DEPENDENCIES } from "./deps/defaults/graphql";
+import CORE_DEPENDENCIES from "./deps/defaults/core";
 
 function groupToCommandMap(group: CommandGroup): { [key: string]: string } {
   return Object.keys(group).reduce(
@@ -68,18 +69,25 @@ yargs.command(
 yargs.command(
   "upgrade",
   "Upgrade dependencies",
-  yargs => yargs.option("dry-run", { desc: "Don't actually upgrade anything" }),
+  yargs =>
+    yargs
+      .option("dry-run", { desc: "Don't actually upgrade anything" })
+      .option("force", {
+        desc: "Reinstall all registered packages to the locked version"
+      }),
   async argv => {
     const pkg = await readPackageJson();
 
     const deps = unionDeps([
+      CORE_DEPENDENCIES,
       WEBPACK_DEPENDENCIES,
       REACT_DEPENDENCIES,
       GRAPHQL_DEPENDENCIES
     ]);
 
-    const toUpgrade = outOfDatePackages({ pkg, depSet: deps });
-    console.log(toUpgrade);
+    const toUpgrade = argv.force
+      ? deps
+      : outOfDatePackages({ pkg, depSet: deps });
 
     if (!toUpgrade) {
       console.log("Nothing is out of date");
@@ -90,7 +98,7 @@ yargs.command(
 
     if (argv.dryRun) {
       console.log("Would have run:");
-      plan.map(toShellString).forEach(s => console.log(s));
+      plan.map(toShellString).forEach(s => console.log(s, "\n"));
     } else {
       for (const swa of plan) {
         console.log(toShellString(swa));

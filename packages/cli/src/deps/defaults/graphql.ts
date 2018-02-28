@@ -8,7 +8,8 @@ export const GRAPHQL_DEPENDENCIES: Dependencies = {
     "apollo-client": "^1.9.0",
     "apollo-codegen": "^0.17",
     "apollo-local-query": "^0.3.0",
-    "react-apollo": "^1.4.10"
+    "react-apollo": "^1.4.10",
+    dataloader: "^1.3.0"
   },
   devDependencies: {
     "apollo-test-utils": "^0.3.2",

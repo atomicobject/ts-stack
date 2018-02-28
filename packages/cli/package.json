@@ -18,11 +18,16 @@
   "directories": {
     "lib": "./lib"
   },
-  "files": ["lib", "es"],
+  "files": [
+    "lib",
+    "es"
+  ],
   "npmFileMap": [
     {
       "basePath": "/lib/",
-      "files": ["*.js"]
+      "files": [
+        "*.js"
+      ]
     }
   ],
   "devDependencies": {
@@ -43,6 +48,7 @@
     "@atomic-object/lenses": "^0.1.0",
     "@types/chalk": "^2.2.0",
     "@types/cross-spawn": "^6.0.0",
+    "@types/mz": "^0.0.32",
     "@types/read-pkg-up": "^3.0.0",
     "@types/semver": "^5.5.0",
     "@types/shell-escape": "^0.2.0",
@@ -50,6 +56,7 @@
     "chalk": "^2.3.0",
     "concurrently": "^3.5.1",
     "cross-spawn": "^6.0.4",
+    "mz": "^2.7.0",
     "read-pkg-up": "^3.0.0",
     "semver": "^5.5.0",
     "shell-escape": "^0.2.0",

@@ -42,9 +42,9 @@ export type Dependencies = {
 };
 export type DepPair = [PackageName, PackageRange];
 
-export type PackageName = Flavor<string, "An NPM package name">;
-export type PackageRange = Flavor<string, "An NPM package version range">;
-export type PackageVersion = Flavor<string, "A specific  NPM package version">;
+export type PackageName = Flavor<string, "package name">;
+export type PackageRange = Flavor<string, "version range">;
+export type PackageVersion = Flavor<string, "package version">;
 
 export type PackageJson = Package;
 type _assertPackageIsDeps = AssertAssignable<Dependencies, PackageJson>;

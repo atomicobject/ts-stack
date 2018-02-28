@@ -12,9 +12,18 @@ import {
   CommandString,
   CommandWithArgs
 } from "../types";
-import { mapValues, pickBy, some, isEmpty, map } from "lodash";
+import {
+  mapValues,
+  pickBy,
+  some,
+  isEmpty,
+  map,
+  flatMap,
+  isString
+} from "lodash";
 import * as semver from "semver";
 import { crossSpawn, spawnWithEnv, shellEscape } from "../spawn";
+import { Isomorphism } from "@atomic-object/lenses";
 
 function depLevelVersion(opts: {
   level: DepLevel;
@@ -73,21 +82,38 @@ function depSatisfied(pkgDeps: Dependencies, [packageName, depRange]: DepPair) {
   );
 }
 
+export function unionDepMaps(dependencies: DepMap[]): DepMap {
+  return depMapPairsIso.from(
+    flatMap(dependencies, deps => depMapPairsIso.to(deps))
+  );
+}
+
+export function unionDeps(dependencies: Dependencies[]): Dependencies {
+  const result: Dependencies = {};
+  for (const level of DEP_LEVELS) {
+    result[level] = unionDepMaps(dependencies.map(deps => deps[level] || {}));
+  }
+  return stripEmpty(result);
+}
+
 export function outOfDatePackages(args: {
   pkg: Dependencies;
   depSet: Dependencies;
 }): Dependencies | null {
   const { depSet, pkg } = args;
 
-  const unsatisfied = mapValues(depSet, (depMap: DepMap, level: DepLevel) =>
+  const unsatisfied = mapValues(depSet, (depMap, level) =>
     pickBy(
       depMap,
-      (depRange: PackageRange, pkgName: PackageName) =>
-        !depSatisfied(pkg, [pkgName, depRange])
+      (depRange, pkgName) => !depSatisfied(pkg, [pkgName, depRange])
     )
-  );
-  const stripped = pickBy(unsatisfied, obj => obj && !isEmpty(obj)) as DepMap;
+  ) as Dependencies;
+  const stripped = stripEmpty(unsatisfied);
   return isEmpty(stripped) ? null : stripped;
+}
+
+function stripEmpty(deps: Partial<Dependencies>): Dependencies {
+  return pickBy(deps, obj => obj && !isEmpty(obj)) as DepMap;
 }
 
 function yarnAddFlag(level: DepLevel): string | null {
@@ -101,9 +127,19 @@ function yarnAddFlag(level: DepLevel): string | null {
   }
 }
 
-function depMapToPairs(depMap: DepMap): Array<DepPair> {
-  return map(depMap, (range, packageName): DepPair => [packageName, range]);
-}
+const depMapPairsIso: Isomorphism<DepMap, DepPair[]> = {
+  from: pairs =>
+    pairs.reduce(
+      (map, [packageName, packageRange]) => {
+        map[packageName] = packageRange;
+        return map;
+      },
+      {} as DepMap
+    ),
+
+  to: depMap =>
+    map(depMap, (range, packageName): DepPair => [packageName, range])
+};
 
 function yarnPackageVersionArg([name, range]: DepPair): string {
   return `${name}@${range}`;
@@ -116,10 +152,11 @@ export function upgradePlan(deps: Dependencies): CommandWithArgs[] {
     const levelDeps = deps[key];
     if (!levelDeps) continue;
 
-    const depArgs = depMapToPairs(levelDeps).map(yarnPackageVersionArg);
+    const depArgs = depMapPairsIso.to(levelDeps).map(yarnPackageVersionArg);
 
-    const yarnCommand = `yarnpkg add ${yarnAddFlag(key) || ""}`.trim();
-    result.push([yarnCommand, depArgs]);
+    const flag = yarnAddFlag(key);
+    const yarnArgs = ["add", flag, ...depArgs].filter(isString);
+    result.push(["yarnpkg", yarnArgs]);
   }
 
   return result;

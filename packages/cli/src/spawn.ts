@@ -55,7 +55,7 @@ export async function concurrently(map: {
   [key: string]: CommandString;
 }): Promise<ChildProcess> {
   const keys = Object.keys(map);
-  const commands = shellEscape(keys.map(k => shellEscape([map[k]])));
+  const commands = shellEscape(keys.map(k => map[k]));
   const colors = keys
     .map((_, i) => CONCURRENTLY_COLORS[i % CONCURRENTLY_COLORS.length])
     .join(",");

@@ -11,9 +11,11 @@ import {
 } from "./spawn";
 import { DEV_COMMANDS } from "./commands/dev";
 import { BUILD_COMMANDS } from "./commands/build";
-import { upgradePlan, outOfDatePackages } from "./deps";
+import { upgradePlan, outOfDatePackages, unionDeps } from "./deps";
 import { readPackageJson } from "./env";
 import WEBPACK_DEPENDENCIES from "./deps/defaults/webpack";
+import { REACT_DEPENDENCIES } from "./deps/defaults/react";
+import { GRAPHQL_DEPENDENCIES } from "./deps/defaults/graphql";
 
 function groupToCommandMap(group: CommandGroup): { [key: string]: string } {
   return Object.keys(group).reduce(
@@ -69,7 +71,15 @@ yargs.command(
   yargs => yargs.option("dry-run", { desc: "Don't actually upgrade anything" }),
   async argv => {
     const pkg = await readPackageJson();
-    const toUpgrade = outOfDatePackages({ pkg, depSet: WEBPACK_DEPENDENCIES });
+
+    const deps = unionDeps([
+      WEBPACK_DEPENDENCIES,
+      REACT_DEPENDENCIES,
+      GRAPHQL_DEPENDENCIES
+    ]);
+
+    const toUpgrade = outOfDatePackages({ pkg, depSet: deps });
+    console.log(toUpgrade);
 
     if (!toUpgrade) {
       console.log("Nothing is out of date");

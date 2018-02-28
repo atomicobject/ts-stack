@@ -18,16 +18,11 @@
   "directories": {
     "lib": "./lib"
   },
-  "files": [
-    "lib",
-    "es"
-  ],
+  "files": ["lib", "es"],
   "npmFileMap": [
     {
       "basePath": "/lib/",
-      "files": [
-        "*.js"
-      ]
+      "files": ["*.js"]
     }
   ],
   "devDependencies": {
@@ -45,6 +40,7 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
+    "@atomic-object/lenses": "^0.1.0",
     "@types/chalk": "^2.2.0",
     "@types/cross-spawn": "^6.0.0",
     "@types/read-pkg-up": "^3.0.0",

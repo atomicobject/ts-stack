@@ -2,31 +2,19 @@ import chalk from "chalk";
 import { promisify } from "util";
 import * as shellEscape from "shell-escape";
 import * as crossSpawn from "cross-spawn";
-import { exec, ChildProcess } from "mz/child_process";
-
-let _yarnPath: string | undefined;
-export async function yarnPath(): Promise<string> {
-  if (!_yarnPath) {
-    const [stdout, stderr] = await exec("yarn -s --json env");
-    const stringOutput = stdout.toString("utf8");
-    try {
-      const vars = JSON.parse(JSON.parse(stringOutput).data);
-      _yarnPath = vars.PATH;
-    } catch (e) {
-      console.log({ badEnv: stringOutput });
-      throw e;
-    }
-  }
-  return _yarnPath!;
-}
+import { ChildProcess } from "mz/child_process";
+import { yarnPath, findPackageJson, projectRoot } from "./env";
+import { CommandString, CommandWithArgs } from "./types";
 
 function prefix(prefix: string, data: string) {
   return data.replace(/^/g, prefix);
 }
 
+export { crossSpawn, shellEscape };
+
 export async function spawnWithEnv(params: {
   name?: string;
-  cmd: string;
+  cmd: CommandString;
   // color: string;
 }): Promise<ChildProcess> {
   const child = crossSpawn(params.cmd, [], {
@@ -37,16 +25,19 @@ export async function spawnWithEnv(params: {
     }
   });
 
-  // const label = params.name ? chalk.magenta(`${params.name}: `) : "";
-  // child.stdout.pipe(process.stdout);
-  // child.stdout.on(
-  //   "data",
-  //   data => process.stdout.write(data) // prefix(label, data.toString()))
-  // );
-  // child.stderr.on("data", data =>
-  //   process.stderr.write(prefix(label, data.toString()))
-  // );
   return child;
+}
+
+export async function execInProjectRoot([cmd, args]: CommandWithArgs) {
+  const cp = await crossSpawn(cmd, args, {
+    cwd: await projectRoot(),
+    shell: true,
+    stdio: "inherit"
+  });
+
+  return new Promise(resolve => {
+    cp.on("exit", resolve);
+  });
 }
 
 const CONCURRENTLY_COLORS = [
@@ -58,8 +49,10 @@ const CONCURRENTLY_COLORS = [
   "cyan",
   "gray"
 ];
+
+/** Run a set of commands with the concurrently command */
 export async function concurrently(map: {
-  [key: string]: string;
+  [key: string]: CommandString;
 }): Promise<ChildProcess> {
   const keys = Object.keys(map);
   const commands = shellEscape(keys.map(k => shellEscape([map[k]])));
@@ -76,6 +69,10 @@ export interface CommandGroup {
   [key: string]: {
     mode?: "MANUAL";
     desc?: string;
-    cmd: string;
+    cmd: CommandString;
   };
+}
+
+export function toShellString(cwa: CommandWithArgs): CommandString {
+  return `${cwa[0]} ${shellEscape(cwa[1])}`.trim();
 }

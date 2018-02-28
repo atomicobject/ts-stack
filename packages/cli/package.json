@@ -37,7 +37,7 @@
     "@types/lodash-es": "^4.17.0",
     "jest": "^20.0.4",
     "jsverify": "^0.8.2",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17",
     "lodash-es": "^4.17.4",
     "nodemon": "^1.14.10",
     "rimraf": "^2.6.2",
@@ -47,13 +47,15 @@
   "dependencies": {
     "@types/chalk": "^2.2.0",
     "@types/cross-spawn": "^6.0.0",
-    "@types/read-pkg": "^3.0.0",
+    "@types/read-pkg-up": "^3.0.0",
+    "@types/semver": "^5.5.0",
     "@types/shell-escape": "^0.2.0",
     "@types/yargs": "^10.0.1",
     "chalk": "^2.3.0",
     "concurrently": "^3.5.1",
     "cross-spawn": "^6.0.4",
-    "read-pkg": "^3.0.0",
+    "read-pkg-up": "^3.0.0",
+    "semver": "^5.5.0",
     "shell-escape": "^0.2.0",
     "yargs": "^11.0.0"
   }

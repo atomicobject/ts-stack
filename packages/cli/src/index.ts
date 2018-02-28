@@ -2,9 +2,18 @@
 
 import * as shellEscape from "shell-escape";
 import * as Yargs from "yargs";
-import { CommandGroup, spawnWithEnv, concurrently } from "./spawn";
+import {
+  CommandGroup,
+  spawnWithEnv,
+  concurrently,
+  toShellString,
+  execInProjectRoot
+} from "./spawn";
 import { DEV_COMMANDS } from "./commands/dev";
 import { BUILD_COMMANDS } from "./commands/build";
+import { upgradePlan, outOfDatePackages } from "./deps";
+import { readPackageJson } from "./env";
+import WEBPACK_DEPENDENCIES from "./deps/defaults/webpack";
 
 function groupToCommandMap(group: CommandGroup): { [key: string]: string } {
   return Object.keys(group).reduce(
@@ -51,6 +60,33 @@ yargs.command(
   argv => {
     const args = argv.args || [];
     spawnWithEnv({ cmd: `yarn jest ${shellEscape(args)}` });
+  }
+);
+
+yargs.command(
+  "upgrade",
+  "Upgrade dependencies",
+  yargs => yargs.option("dry-run", { desc: "Don't actually upgrade anything" }),
+  async argv => {
+    const pkg = await readPackageJson();
+    const toUpgrade = outOfDatePackages({ pkg, depSet: WEBPACK_DEPENDENCIES });
+
+    if (!toUpgrade) {
+      console.log("Nothing is out of date");
+      return;
+    }
+
+    const plan = upgradePlan(toUpgrade);
+
+    if (argv.dryRun) {
+      console.log("Would have run:");
+      plan.map(toShellString).forEach(s => console.log(s));
+    } else {
+      for (const swa of plan) {
+        console.log(toShellString(swa));
+        await execInProjectRoot(swa);
+      }
+    }
   }
 );
 

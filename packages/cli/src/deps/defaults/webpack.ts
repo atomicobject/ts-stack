@@ -1,5 +1,7 @@
-export default {
-  dependencies: {
+import { Dependencies } from "../../types";
+
+export const WEBPACK_DEPENDENCIES: Dependencies = {
+  devDependencies: {
     "awesome-typescript-loader": "^3.2.2",
     "compression-webpack-plugin": "^1.0.0",
     "css-loader": "^0.28.0",
@@ -17,3 +19,5 @@ export default {
     "webpack-split-by-path": "^2.0.0"
   }
 };
+
+export default WEBPACK_DEPENDENCIES;

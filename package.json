@@ -1,6 +1,8 @@
 {
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "build": "lerna run --parallel build",
     "watch": "lerna run --parallel watch",
@@ -17,7 +19,7 @@
     "@types/lodash": "^4.14.74",
     "execa": "0.8.0",
     "jest": "^20",
-    "lerna": "^2.5.1",
+    "lerna": "^2.8.0",
     "lodash": "^4.17.4",
     "rimraf": "^2.6.2",
     "ts-jest": "^20.0.11",

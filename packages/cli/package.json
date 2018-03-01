@@ -12,7 +12,7 @@
     "watch": "tsc -p ./tsconfig.json -w",
     "clean": "rimraf es lib"
   },
-  "bin": "commonjs/index.js",
+  "bin": { "cli": "commonjs/index.js" },
   "main": "commonjs/index.js",
   "typings": "commonjs/index",
   "directories": {

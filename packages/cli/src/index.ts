@@ -11,7 +11,8 @@ import {
 } from "./spawn";
 import { DEV_COMMANDS } from "./commands/dev";
 import { BUILD_COMMANDS } from "./commands/build";
-import { upgradePlan, outOfDatePackages, unionDeps } from "./deps";
+import { upgradePlan } from "./deps";
+import * as Dependencies from "./types/dependencies";
 import { readPackageJson } from "./env";
 import WEBPACK_DEPENDENCIES from "./deps/defaults/webpack";
 import { REACT_DEPENDENCIES } from "./deps/defaults/react";
@@ -78,7 +79,7 @@ yargs.command(
   async argv => {
     const pkg = await readPackageJson();
 
-    const deps = unionDeps([
+    const deps = Dependencies.union([
       CORE_DEPENDENCIES,
       WEBPACK_DEPENDENCIES,
       REACT_DEPENDENCIES,
@@ -87,7 +88,7 @@ yargs.command(
 
     const toUpgrade = argv.force
       ? deps
-      : outOfDatePackages({ pkg, depSet: deps });
+      : Dependencies.outOfDate({ current: pkg, desired: deps });
 
     if (!toUpgrade) {
       console.log("Nothing is out of date");

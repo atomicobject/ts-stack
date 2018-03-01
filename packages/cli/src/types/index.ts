@@ -19,29 +19,6 @@ export type CommandString = Flavor<
 
 export type CommandWithArgs = [CommandString, Array<string>];
 
-export type DepLevel =
-  | "dependencies"
-  | "devDependencies"
-  | "optionalDependencies";
-
-export const DEP_LEVELS: ReadonlyArray<DepLevel> = [
-  "dependencies",
-  "devDependencies",
-  "optionalDependencies"
-];
-
-export type DepMap = Flavor<
-  { [name: string]: string },
-  "dependency package/version range map"
->;
-export type Dependencies = {
-  bundleDependencies?: DepMap;
-  dependencies?: DepMap;
-  devDependencies?: DepMap;
-  optionalDependencies?: DepMap;
-};
-export type DepPair = [PackageName, PackageRange];
-
 export type PackageName = Flavor<string, "package name">;
 export type PackageRange = Flavor<string, "version range">;
 export type PackageVersion = Flavor<string, "package version">;

@@ -1,16 +1,15 @@
-import { outOfDatePackages } from "..";
-import { Dependencies } from "../../types";
+import { outOfDate, Dependencies } from "..";
 
 describe("outOfDatePackages", () => {
   it("Keeps deps whose min value is greater than the required min value", () => {
-    const result = outOfDatePackages({
-      pkg: {
+    const result = outOfDate({
+      current: {
         dependencies: {
           react: "^15.5.0",
           jest: "^22"
         }
       },
-      depSet: {
+      desired: {
         dependencies: {
           react: "^16",
           jest: "^21",
@@ -29,8 +28,8 @@ describe("outOfDatePackages", () => {
   });
 
   it("strips empty dep categories", () => {
-    const result = outOfDatePackages({
-      pkg: {
+    const result = outOfDate({
+      current: {
         dependencies: {
           react: "^15.5.0"
         },
@@ -38,7 +37,7 @@ describe("outOfDatePackages", () => {
           jest: "^22"
         }
       },
-      depSet: {
+      desired: {
         dependencies: {
           react: "^16"
         },
@@ -57,19 +56,19 @@ describe("outOfDatePackages", () => {
   });
 
   it("returns null if everything is up to date", () => {
-    const result = outOfDatePackages({
-      pkg: {
+    const result = outOfDate({
+      current: {
         dependencies: {
           jest: "^22"
         }
       },
-      depSet: {
+      desired: {
         dependencies: {
           jest: "^21"
         }
       }
     });
 
-    expect(result).toBeNull();
+    expect(result).toEqual({});
   });
 });

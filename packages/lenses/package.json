@@ -11,7 +11,8 @@
     "build:es": "tsc",
     "build:commonjs": "tsc -p ./tsconfig.commonjs.json",
     "watch": "nodemon -w src -x 'yarn build'",
-    "clean": "rimraf es lib"
+    "clean": "rimraf es lib",
+    "prepublish": "yarn build"
   },
   "sideEffects": false,
   "main": "commonjs/index.js",
@@ -20,13 +21,7 @@
   "directories": {
     "lib": "./lib"
   },
-  "files": ["lib", "es"],
-  "npmFileMap": [
-    {
-      "basePath": "/lib/",
-      "files": ["*.js"]
-    }
-  ],
+  "files": ["commonjs", "es"],
   "devDependencies": {
     "@types/jest": "^20.0.8",
     "@types/lodash": "^4.14.74",

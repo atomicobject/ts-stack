@@ -1,4 +1,6 @@
-export { Arrays } from "./arrays";
+import * as Arrays from "./arrays";
+
+export { Arrays };
 
 /** Given an object, a sequence of keys, and a value, deep update that value by recursively copying. Type safe. */
 let _generalUpdater = makeUpdater();

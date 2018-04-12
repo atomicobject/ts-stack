@@ -32,7 +32,7 @@ export const CORE_DEPENDENCIES: Dependencies = {
     nodemon: "^1.11.0",
     prettier: "^1.5.3",
     nightmare: "^2.10.0",
-    typescript: "^2.7.1",
+    typescript: "^2.8.0",
     tslint: "^5.5.0",
     "tslint-eslint-rules": "^4.0.0",
     "ts-node": "^3.3.0",

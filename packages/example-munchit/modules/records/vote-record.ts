@@ -1,10 +1,11 @@
-import { RepositoryBase, loaderOf, NumberId } from "./record";
+import { RepositoryBase, loaderOf} from "@atomic-object/records";
 import { VoteRecord, SnackRecord } from "records/record-infos";
 import { SnackId } from "records/snack-record";
 import * as DataLoader from "dataloader";
-import { keyBy } from "lodash-es";
+import { Flavor } from "helpers";
+import keyBy from "lodash-es/keyBy"
 
-export type VoteId = NumberId<"votes">;
+export type VoteId = Flavor<number, "votes">;
 
 export interface UnsavedVote {
   snackId: SnackId;

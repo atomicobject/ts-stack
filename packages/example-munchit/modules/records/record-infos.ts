@@ -1,4 +1,4 @@
-import { recordInfo } from "records/record";
+import { recordInfo } from "@atomic-object/records";
 import { UnsavedVote, SavedVote } from "records/vote-record";
 import { UnsavedSnack, SavedSnack } from "records/snack-record";
 

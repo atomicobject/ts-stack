@@ -7,7 +7,8 @@
   },
   "main": "./index.js",
   "dependencies": {
-    "@atomic-object/lenses": "^0.1.4"
+    "@atomic-object/lenses": "^0.1.4",
+    "@atomic-object/records": "^0.1.0-1"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.4.1",

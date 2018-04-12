@@ -1,14 +1,10 @@
-import { Knex } from "../db";
-import * as DataLoader from "dataloader";
+import DataLoader from "dataloader";
+import * as knex from "knex";
 
-import keyBy from "lodash-es/keyBy";
-import groupBy from "lodash-es/groupBy";
-import { Flavor } from "helpers";
+import keyBy from "lodash.keyby"
+import groupBy from "lodash.groupby"
 
-/** This type is just a number representing a database ID that tracks the type of the source. */
-export type NumberId<T> = Flavor<number, T>;
-/** This type is just a string representing a database ID that tracks the type of the source. */
-export type StringId<T> = Flavor<string, T>;
+export type Knex = knex;
 
 export interface RecordInfo<Unsaved, Saved, Id extends keyof Saved> {
   _saved: Saved;
@@ -45,7 +41,7 @@ export function idKeyOf<Id extends string>(recordInfo: { idKey: Id }) {
   return recordInfo.idKey;
 }
 
-class LoaderFactory<
+export class LoaderFactory<
   UnsavedDestType,
   SavedDestType,
   DestId extends keyof SavedDestType
@@ -150,9 +146,13 @@ export function loaderOf<
   return new LoaderFactory<UnsavedDestType, SavedDestType, DestId>(repo);
 }
 
-abstract class TableHelpers<UnsavedR, SavedR, IdKeyT extends keyof SavedR> {
+export abstract class TableHelpers<
+  UnsavedR,
+  SavedR,
+  IdKeyT extends keyof SavedR
+> {
   abstract recordType: RecordInfo<UnsavedR, SavedR, IdKeyT>;
-  protected abstract db: Knex;
+  public abstract db: Knex;
 
   table() {
     return this.db.table(this.recordType.tableName);
@@ -170,6 +170,32 @@ abstract class TableHelpers<UnsavedR, SavedR, IdKeyT extends keyof SavedR> {
     return Object.assign({}, unsaved, { id: ids[0] }) as any;
   }
 
+  // async updateFields(id: IdKeyT, attrs: Partial<SavedR>): Promise<SavedR> {
+  //   let records: SavedR[];
+  //   try {
+  //     records = await this.table()
+  //       .where({ id: id })
+  //       .update(attrs, "*");
+  //   } catch (err) {
+  //     throw new Error(err.message);
+  //   }
+  //   const updatedRecord = records[0] as SavedR;
+  //   if (updatedRecord) {
+  //     return updatedRecord;
+  //   } else {
+  //     throw new Error("Could not find record");
+  //   }
+  // }
+
+  async delete(...ids: IdKeyT[]) {
+    try {
+      await this.table()
+        .where({ id: ids })
+        .delete();
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
   async all(): Promise<SavedR[]> {
     return await this.table();
   }
@@ -177,6 +203,7 @@ abstract class TableHelpers<UnsavedR, SavedR, IdKeyT extends keyof SavedR> {
   async count(): Promise<number> {
     return await this.table().count();
   }
+
 
   findById = new DataLoader<SavedR[IdKeyT], SavedR | undefined>(async ids => {
     const rows: SavedR[] = await this.table().whereIn("id", ids as any);
@@ -187,8 +214,8 @@ abstract class TableHelpers<UnsavedR, SavedR, IdKeyT extends keyof SavedR> {
 
 export interface RepositoryBase<U, S, Id extends keyof S>
   extends TableHelpers<U, S, Id> {
-  readonly tableName: string;
 }
+
 
 export function RepositoryBase<U, S, Id extends keyof S>(
   recordType: RecordInfo<U, S, Id>
@@ -196,9 +223,8 @@ export function RepositoryBase<U, S, Id extends keyof S>(
   return class RepositoryBase extends TableHelpers<U, S, Id> {
     static readonly recordType = recordType;
     static readonly tableName = recordType.tableName;
-    public readonly tableName!: string;
     public readonly recordType = recordType;
-    protected db: Knex;
+    public db: Knex;
 
     constructor(db: Knex) {
       super();

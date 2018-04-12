@@ -18,6 +18,7 @@ import WEBPACK_DEPENDENCIES from "./deps/defaults/webpack";
 import { REACT_DEPENDENCIES } from "./deps/defaults/react";
 import { GRAPHQL_DEPENDENCIES } from "./deps/defaults/graphql";
 import CORE_DEPENDENCIES from "./deps/defaults/core";
+import { KNEX_DEPENDENCIES } from "./deps/defaults/knex";
 
 function groupToCommandMap(group: CommandGroup): { [key: string]: string } {
   return Object.keys(group).reduce(
@@ -83,7 +84,8 @@ yargs.command(
       CORE_DEPENDENCIES,
       WEBPACK_DEPENDENCIES,
       REACT_DEPENDENCIES,
-      GRAPHQL_DEPENDENCIES
+      GRAPHQL_DEPENDENCIES,
+      KNEX_DEPENDENCIES
     ]);
 
     const toUpgrade = argv.force

@@ -1,4 +1,4 @@
-import { Dependencies } from "../../types";
+import { Dependencies } from "../../types/dependencies";
 
 export const REACT_DEPENDENCIES: Dependencies = {
   dependencies: {

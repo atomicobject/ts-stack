@@ -1,4 +1,4 @@
-import { Dependencies } from "../../types";
+import { Dependencies } from "../../types/dependencies";
 
 export const GRAPHQL_DEPENDENCIES: Dependencies = {
   dependencies: {

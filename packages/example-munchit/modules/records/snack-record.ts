@@ -1,6 +1,6 @@
 import { RepositoryBase, loaderOf} from "@atomic-object/records";
 
-import { SnackRecord, VoteRecord } from "records/record-infos";
+import { SnackRecord, VoteRecord } from "records";
 import { Flavor } from "helpers";
 
 export type SnackId = Flavor<number, "snacks">;

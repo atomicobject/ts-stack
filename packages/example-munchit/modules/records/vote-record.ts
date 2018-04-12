@@ -1,5 +1,5 @@
 import { RepositoryBase, loaderOf} from "@atomic-object/records";
-import { VoteRecord, SnackRecord } from "records/record-infos";
+import { VoteRecord, SnackRecord } from "records";
 import { SnackId } from "records/snack-record";
 import * as DataLoader from "dataloader";
 import { Flavor } from "helpers";

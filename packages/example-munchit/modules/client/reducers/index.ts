@@ -1,10 +1,12 @@
 import * as State from "../state";
 import { ActionTypeKeys, ActionTypes } from "client/actions";
 
-export function rootReducer(
-  state: State.Type = State.DEFAULT,
+export type Reducer = (
+  state: State.Type | undefined,
   action: ActionTypes
-): State.Type {
+) => State.Type;
+
+export const rootReducer: Reducer = (state = State.DEFAULT, action) => {
   switch (action.type) {
     case ActionTypeKeys.SET_POPULARITY:
       return State.popularityMode.set(state, action.popularityMode);
@@ -12,4 +14,4 @@ export function rootReducer(
     default:
       return state;
   }
-}
+};

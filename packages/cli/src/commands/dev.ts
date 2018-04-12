@@ -14,8 +14,7 @@ export const DEV_COMMANDS: CommandGroup = {
     desc: "Run the webpack dev server for the client"
   },
   "dev:graphql": {
-    cmd:
-      "sleep 8 && nodemon -e graphql },gql -w modules/ -x 'cli build:graphql'",
+    cmd: "sleep 8 && nodemon -e graphql,gql -w modules/ -x 'cli build:graphql'",
     desc: "Watch for changes to graphql files and rebuild on change."
   }
 };

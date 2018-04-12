@@ -18,7 +18,7 @@ export function AppHeader() {
   );
 }
 
-export function App(props: { children: JSX.Element }) {
+export function AppShell(props: { children: JSX.Element }) {
   const { children } = props;
   return (
     <div className="munchit-app">

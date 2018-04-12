@@ -16,12 +16,30 @@ import { mockNetworkInterfaceWithSchema } from "apollo-test-utils";
 import { GraphQLResolveInfo } from "graphql";
 import * as State from "client/state/index";
 import { rootReducer } from "client/reducers/index";
-import { Reducer } from "redux";
+import { Reducer, combineReducers } from "redux";
 import { createStore, compose, applyMiddleware } from "redux";
 import { RenderFunction } from "@storybook/react";
 import { MemoryRouter } from "react-router";
 import { SchemaMap } from "graphql-api";
 import { routerReducer } from "react-router-redux";
+import { buildCore } from "client";
+
+// type DeepPartial<T> = T extends object //T extends any[] ? Array<DeepPartial<T[number]>> :
+//   ? {
+//       [P in keyof T]?: T[P] extends Array<infer U>
+//         ? Array<DeepPartial<U>>
+//         : DeepPartial<T[P]>
+//     }
+//   : T;
+
+// type x = DeepPartial<{
+//   foo: number;
+//   bar: {
+//     map: Map<number, string>;
+//     y: string;
+//   }[];
+// }>;
+
 type DeepPartial<T> = { [P in keyof T]?: DeepPartial<T[P]> };
 type MockDefinitions<T> = {
   [K in keyof T]?: ((
@@ -53,8 +71,6 @@ export interface MockProviderOpts {
   /** Reducer function */
   reducer?: Reducer<State.Type>;
 
-  /** Value to use as state. Alternatively use initState */
-  state?: State.Type;
   /** A function to initialize the state. Passed the default state returned by the reducer. */
   initState?: (state: State.Type) => State.Type;
 }
@@ -63,40 +79,27 @@ export interface MockProviderOpts {
 export function mockProvider(opts?: MockProviderOpts) {
   if (!opts) opts = {};
 
+  let { initState } = opts;
   const apollo = mockClient(opts.mocks || {});
 
-  const apolloReducer = apollo.reducer();
-
-  function enhancedReducer(s: any, e: any): State.Type {
-    let state = rootReducer(s, e);
-    const newState = {
-      ...state,
-      router: routerReducer(s && s.router, e),
-      apollo: apolloReducer(s && s.apollo, e)
-    };
-    // console.log(e, newState);
-    return newState;
-  }
   let maybeJest: typeof jest | undefined = undefined;
   try {
     maybeJest = jest;
   } catch {}
 
   const mockFn = maybeJest ? maybeJest.fn : (x: any) => x;
-  const reducer = opts.reducer || mockFn(enhancedReducer);
-
-  const sagaMiddleware = createSagaMiddleware();
-  const enhancer = compose(
-    applyMiddleware(sagaMiddleware, apollo.middleware())
-  );
-  let state =
-    opts.state || reducer(undefined as any, { type: "@@INIT" } as any);
-  if (opts.initState) state = opts.initState(state);
-
-  const store = createStore<State.Type>(enhancedReducer, state, enhancer);
+  const { reducer, store } = buildCore({
+    apollo,
+    decorateReducer: mockFn,
+    initState,
+    routing: undefined // disable routing
+  });
 
   return class extends React.Component<{}, {}> {
     static displayName = "MockProvider";
+    static store = store;
+    static reducer = reducer;
+
     render() {
       return (
         <MemoryRouter>

@@ -196,7 +196,7 @@ export function RepositoryBase<U, S, Id extends keyof S>(
   return class RepositoryBase extends TableHelpers<U, S, Id> {
     static readonly recordType = recordType;
     static readonly tableName = recordType.tableName;
-    public readonly tableName: string;
+    public readonly tableName!: string;
     public readonly recordType = recordType;
     protected db: Knex;
 

@@ -87,6 +87,7 @@ describe("Home page", () => {
 
     await sleep(0);
 
+    page.update();
     const toggles = page.find(SnackVoterEntry);
     const fooToggle = toggles.filterWhere(e => e.text().includes("Foo"));
     const barToggle = toggles.filterWhere(e => e.text().includes("Bar"));

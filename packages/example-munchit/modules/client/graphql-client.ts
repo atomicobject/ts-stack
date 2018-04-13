@@ -1,13 +1,12 @@
-import { ApolloClient, createBatchingNetworkInterface } from "react-apollo";
-
-const networkInterface = createBatchingNetworkInterface({
-  uri: "/graphql",
-  batchInterval: 10,
-  opts: {
-    credentials: "same-origin"
-  }
-});
+import ApolloClient from "apollo-client";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { BatchHttpLink } from "apollo-link-batch-http";
 
 export const graphqlClient = new ApolloClient({
-  networkInterface: networkInterface
+  cache: new InMemoryCache(),
+  link: new BatchHttpLink({
+    uri: "/graphql",
+    batchInterval: 10,
+    credentials: "same-origin"
+  })
 });

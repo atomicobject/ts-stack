@@ -10,9 +10,8 @@ import {
 
 export { MockList } from "graphql-tools";
 
-import { ApolloProvider, ApolloClient } from "react-apollo";
+import { ApolloProvider } from "react-apollo";
 
-import { mockNetworkInterfaceWithSchema } from "apollo-test-utils";
 import { GraphQLResolveInfo } from "graphql";
 import * as State from "client/state/index";
 import { rootReducer } from "client/reducers/index";
@@ -23,6 +22,10 @@ import { MemoryRouter } from "react-router";
 import { SchemaMap } from "graphql-api";
 import { routerReducer } from "react-router-redux";
 import { buildCore } from "client";
+import ApolloClient from "apollo-client";
+import { NormalizedCacheObject, InMemoryCache } from "apollo-cache-inmemory";
+import { SchemaLink } from "apollo-link-schema";
+import { Provider } from "react-redux";
 
 // type DeepPartial<T> = T extends object //T extends any[] ? Array<DeepPartial<T[number]>> :
 //   ? {
@@ -51,16 +54,20 @@ type MockDefinitions<T> = {
 };
 
 /** Generate a mock apollo client with a defined set of mocks. If you need to mock a new composite graphql type, update the SchemaMap in the graphql module. */
-export function mockClient(mocks: MockDefinitions<SchemaMap>): ApolloClient {
+export function mockClient(
+  mocks: MockDefinitions<SchemaMap>
+): ApolloClient<NormalizedCacheObject> {
   const exSchema = makeExecutableSchema({ typeDefs: rawSchema });
   addMockFunctionsToSchema({
     schema: exSchema,
     mocks: mocks as any
   });
 
-  const netInterface = mockNetworkInterfaceWithSchema({ schema: exSchema });
   const client = new ApolloClient({
-    networkInterface: netInterface
+    cache: new InMemoryCache(),
+    link: new SchemaLink({
+      schema: exSchema
+    })
   });
   return client;
 }
@@ -102,11 +109,13 @@ export function mockProvider(opts?: MockProviderOpts) {
 
     render() {
       return (
-        <MemoryRouter>
-          <ApolloProvider client={apollo} store={store}>
-            {this.props.children}
-          </ApolloProvider>
-        </MemoryRouter>
+        <Provider store={store}>
+          <MemoryRouter>
+            <ApolloProvider client={apollo}>
+              {this.props.children}
+            </ApolloProvider>
+          </MemoryRouter>
+        </Provider>
       );
     }
   };

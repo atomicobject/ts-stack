@@ -8,7 +8,7 @@ require("../modules/client/styles/main.scss");
 import createHistory from "history/createBrowserHistory";
 
 import { graphqlClient } from "client/graphql-client";
-import { ApolloProvider, createApolloReducer } from "react-apollo";
+import { ApolloProvider } from "react-apollo";
 import { ConnectedRouter } from "react-router-redux";
 import { Provider } from "react-redux";
 
@@ -19,14 +19,14 @@ const { store } = buildCore({
   apollo: graphqlClient
 });
 
-console.log(store);
-
 const rootEl = (
-  <ApolloProvider client={graphqlClient} store={store}>
-    <ConnectedRouter history={history}>
-      <App />
-    </ConnectedRouter>
-  </ApolloProvider>
+  <Provider store={store}>
+    <ApolloProvider client={graphqlClient}>
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
+    </ApolloProvider>
+  </Provider>
 );
 ReactDom.render(
   (rootEl as any) as React.ReactElement<any>,

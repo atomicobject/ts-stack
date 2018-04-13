@@ -1,23 +1,23 @@
 /* tslint:disable */
 //  This file was automatically generated and should not be edited.
 
-export type AddSnackMutationVariables = {
+export interface AddSnackMutationVariables {
   name: string;
-};
+}
 
-export type AddSnackMutation = {
+export interface AddSnackMutation {
   addSnack: {
     id: number;
     name: string;
     voteCount: number;
   } | null;
-};
+}
 
-export type VoteForSnackMutationVariables = {
+export interface VoteForSnackMutationVariables {
   snackId: number;
-};
+}
 
-export type VoteForSnackMutation = {
+export interface VoteForSnackMutation {
   voteFor: {
     __typename: "Vote";
     id: number;
@@ -27,12 +27,12 @@ export type VoteForSnackMutation = {
       voteCount: number;
     };
   } | null;
-};
+}
 
-export type DashboardSnacksQuery = {
+export interface DashboardSnacksQuery {
   allSnacks: Array<{
     id: number;
     name: string;
     voteCount: number;
   }> | null;
-};
+}

@@ -11,7 +11,7 @@ import { AppShell } from "client/components/app";
 import { HomePage } from "client/pages/home";
 import { AddSnackPage } from "client/pages/add-snack";
 import { Switch } from "react-router";
-import { ApolloClient } from "react-apollo";
+import { ApolloClient } from "apollo-client";
 import { applyMiddleware, createStore, compose } from "redux";
 import { graphqlClient } from "./graphql-client";
 import { rootReducer, Reducer } from "./reducers";
@@ -22,7 +22,7 @@ import compact from "lodash-es/compact";
 
 /** Build the core app store with middlewares and reducer. Used to bootstrap the app to run and to test. */
 export function buildCore(args: {
-  apollo: ApolloClient;
+  apollo: ApolloClient<any>;
   routing?: { history: History };
   decorateReducer?: (reducer: Reducer) => Reducer;
   initState?: (state: State.Type) => State.Type;
@@ -36,7 +36,6 @@ export function buildCore(args: {
 
   const middlewares = compact([
     sagaMiddleware,
-    graphqlClient.middleware(),
 
     // Support disabling routing in tests/storybook stories
     routing ? routerMiddleware(routing.history) : undefined
@@ -44,13 +43,11 @@ export function buildCore(args: {
 
   const enhancer = composeEnhancers(applyMiddleware(...middlewares));
 
-  const apolloReducer = graphqlClient.reducer();
   function enhancedReducer(s: any, e: any): State.Type {
     let state = rootReducer(s, e);
     return {
       ...state,
-      router: routerReducer(s && s.router, e),
-      apollo: apolloReducer(s && s.apollo, e)
+      router: routerReducer(s && s.router, e)
     };
   }
 

@@ -1,4 +1,4 @@
-import { Dependencies } from "../../types";
+import { Dependencies } from "../../types/dependencies";
 
 export const CORE_DEPENDENCIES: Dependencies = {
   dependencies: {
@@ -8,17 +8,13 @@ export const CORE_DEPENDENCIES: Dependencies = {
     "@types/cors": "^2.8.1",
     "@types/dotenv": "^4.0.0",
     "@types/express": "^4.0.35",
-    "@types/knex": "^0.0.61",
     "@types/lodash-es": "^4.14.5",
     "@types/morgan": "^1.7.32",
     "@types/node": "^8.0.19",
     "@types/throng": "^4.0.0",
     throng: "^4.0.0",
     "source-map-support": "^0.4.15",
-    pg: "^7.0.2",
     morgan: "^1.8.1",
-    knex: "^0.13.0",
-    "knex-logger": "^0.1.0",
     "lodash-es": "^4.17.4",
     express: "^4.15.2",
     "express-sslify": "^1.2.0",
@@ -36,10 +32,11 @@ export const CORE_DEPENDENCIES: Dependencies = {
     nodemon: "^1.11.0",
     prettier: "^1.5.3",
     nightmare: "^2.10.0",
-    typescript: "^2.6.2",
+    typescript: "^2.8.0",
     tslint: "^5.5.0",
     "tslint-eslint-rules": "^4.0.0",
     "ts-node": "^3.3.0",
+    "ts-jest": "^21.0.0",
     "precommit-hook": "^3.0.0",
     "node-sass": "^4.5.2",
     jsverify: "^0.8.2",

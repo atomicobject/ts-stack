@@ -7,7 +7,7 @@ import { ApolloClient } from "apollo-client";
 import { addSnackMutation } from "client/graphql-mutations/add-snack-mutation";
 
 export interface ConnectedProps {
-  readonly client: ApolloClient;
+  readonly client: ApolloClient<any>;
 }
 
 function mapDispatchToProps(
@@ -37,7 +37,7 @@ function isComplete(form: InProgressForm): form is CompletedForm {
 
 class ManagedForm extends React.Component<FormProps, FormState> {
   constructor(props: FormProps) {
-    super();
+    super(props);
     this.state = { form: {} };
   }
 

@@ -1,4 +1,4 @@
-import { Dependencies } from "../../types";
+import { Dependencies } from "../../types/dependencies";
 
 export const WEBPACK_DEPENDENCIES: Dependencies = {
   devDependencies: {
@@ -18,6 +18,7 @@ export const WEBPACK_DEPENDENCIES: Dependencies = {
     webpack: "^3.4.1",
     "webpack-node-externals": "^1.5.4",
     "webpack-split-by-path": "^2.0.0",
+    "webpack-dev-server": "^2.4.4",
     autoprefixer: "^7.1.2"
   }
 };

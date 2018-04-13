@@ -14,8 +14,8 @@ module.exports = {
   globalSetup:
     "./packages/example-munchit/dist/scripts/unit-test-before-all.js",
   globals: {
-    "ts-jest": {
-      tsConfigFile: "./tsconfig.jest.json"
-    }
-  }
+    "ts-jest": {}
+  },
+  setupTestFrameworkScriptFile:
+    "<rootDir>/packages/example-munchit/modules/__tests__/setup-enzyme.js"
 };

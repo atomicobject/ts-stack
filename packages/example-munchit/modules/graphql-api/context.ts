@@ -1,8 +1,6 @@
-import { ApolloClient } from "react-apollo";
+import { ApolloClient } from "apollo-client";
 
 import { GraphQLSchema } from "graphql";
-
-const { createLocalInterface } = require("apollo-local-query");
 
 import * as graphql from "graphql";
 
@@ -12,6 +10,13 @@ import { executableSchema } from "./index";
 import { SnackRepository } from "records/snack-record";
 import { VoteRepository } from "records/vote-record";
 import { Transaction } from "knex";
+
+import { SchemaLink } from "apollo-link-schema";
+import {
+  InMemoryCache,
+  NormalizedCache,
+  NormalizedCacheObject
+} from "apollo-cache-inmemory";
 
 export function buildLocalApollo(schema: GraphQLSchema = executableSchema) {
   return new Context().apolloClient;
@@ -25,7 +30,9 @@ export class Context {
   ) {
     this.apolloClient = new ApolloClient({
       ssrMode: true,
-      networkInterface: createLocalInterface(graphql, schema, {
+      cache: new InMemoryCache(),
+      link: new SchemaLink({
+        schema: schema,
         context: this
       })
     });
@@ -36,7 +43,7 @@ export class Context {
   // someRepo = new SomeRepository()
 
   /** An ApolloClient which can be used for local graphql queries. Does not hit the network. */
-  apolloClient: ApolloClient;
+  apolloClient: ApolloClient<NormalizedCacheObject>;
 
   // TODO: Perhaps compose this in?
   snackRepository = new SnackRepository(this.pg);

@@ -8,7 +8,7 @@ import {
 const MUTATION = require("./VoteForSnack.graphql");
 
 export function voteForSnackMutation(
-  apolloClient: ApolloClient,
+  apolloClient: ApolloClient<any>,
   snack: { id: SnackId; voteCount: number }
 ) {
   return apolloClient.mutate<VoteForSnackMutation>({

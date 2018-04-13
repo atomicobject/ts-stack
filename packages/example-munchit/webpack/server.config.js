@@ -28,6 +28,8 @@ console.log(entry);
 
 module.exports = {
   entry: entry,
+  // Never minify the server
+  mode: "development",
 
   //devtool: "source-map",
   devtool: "inline-source-map",
@@ -52,7 +54,7 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [loaders.typescript, loaders.graphql]
+    rules: [loaders.typescript, loaders.graphql]
   },
 
   plugins: [

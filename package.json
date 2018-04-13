@@ -1,8 +1,6 @@
 {
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "scripts": {
     "build": "lerna run --parallel build",
     "watch": "lerna run --parallel watch",
@@ -11,19 +9,19 @@
     "test:unit": "NODE_ENV=test jest"
   },
   "resolutions": {
-    "@types/react": "^15.6.5",
-    "@types/react-dom": "^15.5.2"
+    "@types/react": "16.3.10",
+    "@types/react-dom": "16.0.5"
   },
   "devDependencies": {
     "@types/jest": "^20.0.8",
     "@types/lodash": "^4.14.74",
     "execa": "0.8.0",
-    "jest": "^20",
+    "jest": "^22",
     "lerna": "^2.8.0",
     "lodash": "^4.17.4",
     "rimraf": "^2.6.2",
-    "ts-jest": "^20.0.11",
-    "typescript": "^2.6.2"
+    "ts-jest": "^22",
+    "typescript": "^2.8.0"
   },
   "pre-commit": []
 }

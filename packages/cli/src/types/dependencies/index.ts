@@ -1,6 +1,6 @@
 import { Flavor, PackageName, PackageRange, PackageVersion } from "..";
 
-import { Isomorphism } from "@atomic-object/lenses/es";
+import { Isomorphism } from "@atomic-object/lenses";
 import * as semver from "semver";
 import {
   mapValues,

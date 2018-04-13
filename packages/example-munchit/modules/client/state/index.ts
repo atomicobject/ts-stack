@@ -1,5 +1,4 @@
 import { RouterState } from "react-router-redux";
-import { Store as ApolloStore } from "apollo-client/store";
 import { Lens } from "@atomic-object/lenses";
 
 export enum PopularityMode {
@@ -9,7 +8,6 @@ export enum PopularityMode {
 
 interface State {
   readonly router: RouterState;
-  readonly apollo: ApolloStore;
   readonly popularityMode: PopularityMode;
 }
 export type Type = State;
@@ -18,6 +16,5 @@ export const popularityMode = Lens.from<State>().prop("popularityMode");
 
 export const DEFAULT: State = {
   router: undefined as any, // provided at startup
-  apollo: undefined as any, // provided at startup
   popularityMode: PopularityMode.PERCENTAGE
 };

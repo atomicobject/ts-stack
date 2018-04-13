@@ -1,58 +1,32 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import createSagaMiddleware from "redux-saga";
 
-import App from "../modules/client";
-
-import { createStore, applyMiddleware, compose, combineReducers } from "redux";
-
-import { rootSaga } from "../modules/client/sagas";
-import { rootReducer } from "../modules/client/reducers";
-import { Type } from "../modules/client/state";
+import { buildCore, App } from "../modules/client";
 
 require("../modules/client/styles/main.scss");
 
-import { routerReducer, routerMiddleware } from "react-router-redux";
 import createHistory from "history/createBrowserHistory";
 
-import gql from "graphql-tag";
-
 import { graphqlClient } from "client/graphql-client";
-import { ApolloProvider, createApolloReducer } from "react-apollo";
+import { ApolloProvider } from "react-apollo";
+import { ConnectedRouter } from "react-router-redux";
+import { Provider } from "react-redux";
 
 const history = createHistory();
 
-const sagaMiddleware = createSagaMiddleware();
-const composeEnhancers =
-  ((window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ as typeof compose) ||
-  compose;
-
-const enhancer = composeEnhancers(
-  applyMiddleware(
-    sagaMiddleware,
-    routerMiddleware(history),
-    graphqlClient.middleware()
-  )
-);
-
-const apolloReducer = graphqlClient.reducer();
-function enhancedReducer(s: any, e: any): Type {
-  let state = rootReducer(s, e);
-  return {
-    ...state,
-    router: routerReducer(s && s.router, e),
-    apollo: apolloReducer(s && s.apollo, e)
-  };
-}
-
-let store = createStore(enhancedReducer, enhancer);
-
-sagaMiddleware.run(rootSaga);
+const { store } = buildCore({
+  routing: { history },
+  apollo: graphqlClient
+});
 
 const rootEl = (
-  <ApolloProvider client={graphqlClient} store={store}>
-    <App history={history} />
-  </ApolloProvider>
+  <Provider store={store}>
+    <ApolloProvider client={graphqlClient}>
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
+    </ApolloProvider>
+  </Provider>
 );
 ReactDom.render(
   (rootEl as any) as React.ReactElement<any>,

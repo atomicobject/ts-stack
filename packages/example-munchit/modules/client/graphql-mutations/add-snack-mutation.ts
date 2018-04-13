@@ -7,7 +7,7 @@ import {
 const MUTATION = require("./AddSnack.graphql");
 
 export function addSnackMutation(
-  apolloClient: ApolloClient,
+  apolloClient: ApolloClient<any>,
   snack: { name: string }
 ) {
   const name = snack.name;

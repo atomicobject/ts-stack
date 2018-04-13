@@ -17,12 +17,15 @@ export async function spawnWithEnv(params: {
   cmd: CommandString;
   // color: string;
 }): Promise<ChildProcess> {
+  const env = {
+    PATH: await yarnPath(),
+    ...process.env
+  };
+
   const child = crossSpawn(params.cmd, [], {
     shell: true,
     stdio: "inherit",
-    env: {
-      PATH: await yarnPath()
-    }
+    env
   });
 
   return child;

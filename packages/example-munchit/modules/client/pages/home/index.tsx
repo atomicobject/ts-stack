@@ -1,7 +1,6 @@
 import { HomePageUI, HomePageUIProps } from "client/pages/home/home-page-ui";
-import graphql from "react-apollo/graphql";
 import { DashboardSnacksQuery } from "client/graphql-types";
-import { withApollo } from "react-apollo";
+import { withApollo, graphql } from "react-apollo";
 import { voteForSnackMutation } from "client/graphql-mutations/vote-for-snack-mutation";
 import { ApolloClient } from "apollo-client";
 import { connect } from "react-redux";
@@ -13,8 +12,8 @@ import * as Actions from "client/actions";
 import * as State from "client/state";
 import { AssertAssignable } from "helpers";
 
-/** This page is mounted in the router, so its props are from that. */
-type Props = RouteComponentProps<{}>;
+/** This page is mounted in the router, so its props are from that, but we don't use them. */
+type Props = {};
 
 /** This page uses three higher-order components to provide functionality:
  *  1. withApollo – this HOC from apollo injects a reference to our GraphQL client.
@@ -24,7 +23,7 @@ type Props = RouteComponentProps<{}>;
 
 /** We use Apollo's withApollo higher-order-component to dependency-inject our GraphQL client. It provides these props. */
 interface WithApolloProps {
-  readonly client: ApolloClient;
+  readonly client: ApolloClient<any>;
 }
 type PropsWithApollo = Props & WithApolloProps;
 
@@ -71,15 +70,17 @@ const connectedToRedux = connect<{}, DispatchProps, {}>(
 
 /** Higher order component that fetches the snack data and provides the `snacks` prop to wrapped component. */
 const withSnacksFromGraphQL = graphql<
-  DashboardSnacksQuery,
   ReduxConnectedProps,
+  DashboardSnacksQuery,
+  {},
   HomePageUIProps
 >(require("client/graphql-queries/DashboardSnacks.graphql"), {
   options(props) {
     // Always refetch this query when the page is loaded (component is mounted)
     return { fetchPolicy: "cache-and-network" };
   },
-  props(result): GraphQLProps {
+  props(result): any {
+    const x = result.data!;
     if (result.data && result.data.allSnacks) {
       return {
         snacks: result.data.allSnacks
@@ -93,6 +94,6 @@ const withSnacksFromGraphQL = graphql<
 });
 
 /** The fully-wired home page, with  */
-export const HomePage = withApollo(
+export const HomePage = withApollo<Props>(
   connectedToRedux(withSnacksFromGraphQL(HomePageUI))
 );

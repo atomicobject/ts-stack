@@ -13,35 +13,6 @@ const loaders = require("./loaders");
 const environmentPlugins = (() => {
   if (config.get("minify")) {
     return [
-      new webpack.optimize.OccurrenceOrderPlugin(),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: "vendor",
-        minChunks: function(module) {
-          // this assumes your vendor imports exist in the node_modules directory
-          return (
-            module.context && module.context.indexOf("node_modules") !== -1
-          );
-        }
-      }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: "manifest" //But since there are no more common modules between them we end up with just the runtime code included in the manifest file
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true,
-        minimize: true,
-        comments: false,
-        beautify: false,
-        mangle: {
-          screw_ie8: true
-        },
-        compress: {
-          screw_ie8: true,
-          unused: true,
-          dead_code: true,
-          warnings: false
-        }
-      }),
-      new webpack.optimize.ModuleConcatenationPlugin(),
       new CompressionPlugin({
         asset: "[path].gz[query]",
         algorithm: "gzip",
@@ -64,9 +35,18 @@ const environmentPlugins = (() => {
 })();
 
 module.exports = {
+  mode: config.get("minify") ? "production" : "development",
   entry: {
     app: ["./entry/client.tsx"]
   },
+
+  optimization: config.get("minify")
+    ? undefined
+    : {
+        removeAvailableModules: false,
+        removeEmptyChunks: false,
+        splitChunks: false
+      },
 
   devtool:
     process.env.NODE_ENV !== "production"

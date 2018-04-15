@@ -48,11 +48,6 @@ module.exports = {
         splitChunks: false
       },
 
-  devtool:
-    process.env.NODE_ENV !== "production"
-      ? "inline-source-map"
-      : "nosources-source-map",
-
   plugins: [
     // Define global letiables in the client to instrument behavior.
     new webpack.DefinePlugin({

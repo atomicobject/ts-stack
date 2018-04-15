@@ -11,6 +11,7 @@ import {
   flatMap,
   isString
 } from "lodash";
+import { intersection, difference, values } from "lodash-es";
 
 export type DepLevel =
   | "dependencies"
@@ -34,6 +35,35 @@ export type Dependencies = {
   optionalDependencies?: DepMap;
 };
 export type DepPair = [PackageName, PackageRange];
+
+export enum FeatureSet {
+  CORE = "CORE",
+  WEBPACK = "WEBPACK",
+  REACT = "REACT",
+
+  // optional:
+  GRAPHQL = "GRAPHQL",
+  KNEX = "KNEX"
+}
+export type FeatureDeps = { [k in FeatureSet]: Dependencies };
+
+export const FEATURES: ReadonlyArray<FeatureSet> = values(FeatureSet) as any;
+export const OPTIONAL_FEATURES: ReadonlyArray<FeatureSet> = [
+  FeatureSet.GRAPHQL,
+  FeatureSet.KNEX
+];
+
+export function selectDependencies(args: {
+  deps: FeatureDeps;
+  exclude?: FeatureSet[];
+}) {
+  let { deps, exclude } = args;
+  exclude = exclude || [];
+  exclude = intersection(exclude, OPTIONAL_FEATURES);
+
+  const included = difference(FEATURES, exclude);
+  return union(included.map(k => deps[k]));
+}
 
 /** Return the specified version of a package if it exists in the specified DepLevel. */
 function depLevelVersion(opts: {

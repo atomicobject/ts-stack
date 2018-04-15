@@ -19,7 +19,8 @@ import {
   WEBPACK_DEPENDENCIES,
   REACT_DEPENDENCIES,
   GRAPHQL_DEPENDENCIES,
-  KNEX_DEPENDENCIES
+  KNEX_DEPENDENCIES,
+  DEPENDENCIES
 } from "./deps/defaults/v1";
 
 function groupToCommandMap(group: CommandGroup): { [key: string]: string } {
@@ -82,13 +83,7 @@ yargs.command(
   async argv => {
     const pkg = await readPackageJson();
 
-    const deps = Dependencies.union([
-      CORE_DEPENDENCIES,
-      WEBPACK_DEPENDENCIES,
-      REACT_DEPENDENCIES,
-      GRAPHQL_DEPENDENCIES,
-      KNEX_DEPENDENCIES
-    ]);
+    const deps = Dependencies.selectDependencies({ deps: DEPENDENCIES });
 
     const toUpgrade = argv.force
       ? deps

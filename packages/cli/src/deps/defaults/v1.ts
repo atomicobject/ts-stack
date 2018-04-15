@@ -1,4 +1,8 @@
-import { Dependencies } from "../../types/dependencies";
+import {
+  Dependencies,
+  FeatureSet,
+  FeatureDeps
+} from "../../types/dependencies";
 
 export const CORE_DEPENDENCIES: Dependencies = {
   dependencies: {
@@ -131,4 +135,12 @@ export const WEBPACK_DEPENDENCIES: Dependencies = {
     "webpack-dev-server": "^2.4.4",
     autoprefixer: "^7.1.2"
   }
+};
+
+export const DEPENDENCIES: FeatureDeps = {
+  [FeatureSet.CORE]: CORE_DEPENDENCIES,
+  [FeatureSet.REACT]: REACT_DEPENDENCIES,
+  [FeatureSet.WEBPACK]: WEBPACK_DEPENDENCIES,
+  [FeatureSet.GRAPHQL]: GRAPHQL_DEPENDENCIES,
+  [FeatureSet.KNEX]: KNEX_DEPENDENCIES
 };

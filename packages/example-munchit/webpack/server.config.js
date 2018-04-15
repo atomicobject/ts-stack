@@ -33,6 +33,10 @@ module.exports = {
 
   //devtool: "source-map",
   devtool: "inline-source-map",
+  optimization: {
+    // Don't turn process.env.NODE_ENV into a compile-time constant
+    nodeEnv: false
+  },
 
   target: "node",
   output: {

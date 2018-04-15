@@ -1,9 +1,6 @@
 require("dotenv").config({ silent: false });
 
 const CONCURRENCY = parseInt(process.env.WEB_CONCURRENCY, 10) || 1;
-console.log(process.env.NODE_ENV);
-console.log(process.env.DATABASE_URL);
-console.log(process.env.DEV_DATABASE_URL);
 
 module.exports = {
   environment: process.env.NODE_ENV,

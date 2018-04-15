@@ -14,11 +14,13 @@ import { BUILD_COMMANDS } from "./commands/build";
 import { upgradePlan } from "./deps";
 import * as Dependencies from "./types/dependencies";
 import { readPackageJson } from "./env";
-import WEBPACK_DEPENDENCIES from "./deps/defaults/webpack";
-import { REACT_DEPENDENCIES } from "./deps/defaults/react";
-import { GRAPHQL_DEPENDENCIES } from "./deps/defaults/graphql";
-import CORE_DEPENDENCIES from "./deps/defaults/core";
-import { KNEX_DEPENDENCIES } from "./deps/defaults/knex";
+import {
+  CORE_DEPENDENCIES,
+  WEBPACK_DEPENDENCIES,
+  REACT_DEPENDENCIES,
+  GRAPHQL_DEPENDENCIES,
+  KNEX_DEPENDENCIES
+} from "./deps/defaults/v1";
 
 function groupToCommandMap(group: CommandGroup): { [key: string]: string } {
   return Object.keys(group).reduce(

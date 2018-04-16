@@ -10,26 +10,19 @@
     "build": "yarn build:commonjs",
     "build:commonjs": "tsc -p ./tsconfig.json",
     "watch": "tsc -p ./tsconfig.json -w",
-    "clean": "rimraf es lib"
+    "clean": "rimraf es lib",
+    "prepublish": "yarn build"
   },
   "bin": {
     "cli": "commonjs/index.js"
   },
   "main": "commonjs/index.js",
   "typings": "commonjs/index",
-  "directories": {
-    "lib": "./lib"
-  },
-  "files": [
-    "lib",
-    "es"
-  ],
+  "files": ["commonjs"],
   "npmFileMap": [
     {
-      "basePath": "/lib/",
-      "files": [
-        "*.js"
-      ]
+      "basePath": "/commmonjs/",
+      "files": ["*.js"]
     }
   ],
   "devDependencies": {

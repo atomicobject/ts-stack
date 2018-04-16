@@ -9,9 +9,11 @@ import {
   isEmpty as objIsEmpty,
   map,
   flatMap,
-  isString
+  isString,
+  intersection,
+  difference,
+  values
 } from "lodash";
-import { intersection, difference, values } from "lodash-es";
 
 export type DepLevel =
   | "dependencies"

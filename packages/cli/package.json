@@ -1,6 +1,6 @@
 {
   "name": "@atomic-object/tscli",
-  "version": "0.0.2-0",
+  "version": "0.0.2",
   "description": "CLI Interface for building, running AO TS stack",
   "repository": "https://github.com/atomicobject/ts-stack",
   "author": "Atomic Object",

@@ -1,6 +1,6 @@
 {
   "name": "@atomic-object/tscli",
-  "version": "0.0.1",
+  "version": "0.0.2-0",
   "description": "CLI Interface for building, running AO TS stack",
   "repository": "https://github.com/atomicobject/ts-stack",
   "author": "Atomic Object",
@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@atomic-object/lenses": "^0.1.0",
-    "@atomic-object/records": "^0.1.0-1",
+    "@atomic-object/records": "^0.1.0",
     "@types/cross-spawn": "^6.0.0",
     "@types/mz": "^0.0.32",
     "@types/read-pkg-up": "^3.0.0",

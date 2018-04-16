@@ -1,8 +1,7 @@
 {
   "name": "@atomic-object/records",
-  "version": "0.1.0-1",
-  "description":
-    "A dataloader and knex-based library for building database repositories",
+  "version": "0.1.0",
+  "description": "A dataloader and knex-based library for building database repositories",
   "repository": "https://github.com/atomicobject/ts-stack",
   "author": "Atomic Object",
   "license": "MIT",
@@ -22,7 +21,10 @@
   "directories": {
     "lib": "./lib"
   },
-  "files": ["commonjs", "es"],
+  "files": [
+    "commonjs",
+    "es"
+  ],
   "devDependencies": {
     "@types/jest": "^20.0.8",
     "@types/knex": "^0.0.61",

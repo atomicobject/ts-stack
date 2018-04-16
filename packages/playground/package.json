@@ -1,6 +1,6 @@
 {
   "name": "playground",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "build": "webpack"
@@ -8,7 +8,7 @@
   "main": "./index.js",
   "dependencies": {
     "@atomic-object/lenses": "^0.1.4",
-    "@atomic-object/records": "^0.1.0-1"
+    "@atomic-object/records": "^0.1.0"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.4.1",

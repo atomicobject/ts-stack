@@ -1,6 +1,6 @@
 {
   "name": "@atomic-object/lenses",
-  "version": "0.1.5-1",
+  "version": "0.1.5",
   "description": "A lens library for TypeScript",
   "repository": "https://github.com/atomicobject/ts-stack",
   "author": "Atomic Object",
@@ -39,6 +39,6 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
-    "@atomic-object/records": "^0.1.0-1"
+    "@atomic-object/records": "^0.1.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@atomic-object/tscli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "CLI Interface for building, running AO TS stack",
   "repository": "https://github.com/atomicobject/ts-stack",
   "author": "Atomic Object",
@@ -18,11 +18,15 @@
   },
   "main": "commonjs/index.js",
   "typings": "commonjs/index",
-  "files": ["commonjs"],
+  "files": [
+    "commonjs"
+  ],
   "npmFileMap": [
     {
       "basePath": "/commmonjs/",
-      "files": ["*.js"]
+      "files": [
+        "*.js"
+      ]
     }
   ],
   "devDependencies": {

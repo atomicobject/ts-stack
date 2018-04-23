@@ -13,7 +13,7 @@ export interface ConnectedProps {
 function mapDispatchToProps(
   dispatch: Dispatch<any>,
   props: ConnectedProps
-): {} {
+): FormProps {
   return {
     onSubmit(form: CompletedForm) {
       addSnackMutation(props.client, form).catch(() => {
@@ -27,6 +27,7 @@ type CompletedForm = { readonly [k in AddSnackFields]: string };
 type InProgressForm = Partial<CompletedForm>;
 type FormState = { form: InProgressForm };
 type FormProps = { onSubmit: (form: CompletedForm) => void };
+type ManagedFormProps = FormProps & ConnectedProps;
 
 function isComplete(form: InProgressForm): form is CompletedForm {
   const vals = form as any;
@@ -35,8 +36,8 @@ function isComplete(form: InProgressForm): form is CompletedForm {
   );
 }
 
-class ManagedForm extends React.Component<FormProps, FormState> {
-  constructor(props: FormProps) {
+class ManagedForm extends React.Component<ManagedFormProps, FormState> {
+  constructor(props: ManagedFormProps) {
     super(props);
     this.state = { form: {} };
   }

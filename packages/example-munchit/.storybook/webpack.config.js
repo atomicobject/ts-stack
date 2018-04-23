@@ -25,6 +25,7 @@ module.exports = (storybookBaseConfig, configType) => {
       include: path.resolve(__dirname, "../")
     },
     loaders.typescript,
+    loaders.mjs,
     loaders.graphql
   );
   storybookBaseConfig.module.rules.concat(loaders.allImagesAndFontsArray);

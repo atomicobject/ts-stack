@@ -15,6 +15,12 @@ module.exports = {
     ]
   },
 
+  mjs: {
+    test: /\.mjs$/,
+    include: /node_modules/,
+    type: "javascript/auto"
+  },
+
   graphql: {
     test: /\.(graphql|gql)$/,
     exclude: /node_modules/,

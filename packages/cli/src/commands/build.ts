@@ -13,7 +13,7 @@ export const BUILD_COMMANDS: CommandGroup = {
   },
   "build:graphql:schema:types:gen": {
     cmd:
-      "gql-gen --file modules/graphql-api/schema.json  --template typescript --out modules/graphql-api/schema-types.ts modules/graphql-api/schema.graphql",
+      "gql-gen --file modules/graphql-api/schema.json  --template typescript --out modules/graphql-api/schema-types.ts",
     mode: "MANUAL"
   },
   "build:graphql:schema:types:fmt": {

@@ -11,6 +11,7 @@ import { RouteComponentProps } from "react-router-dom";
 import * as Actions from "client/actions";
 import * as State from "client/state";
 import { AssertAssignable } from "helpers";
+import React = require("react");
 
 /** This page is mounted in the router, so its props are from that, but we don't use them. */
 type Props = {};
@@ -95,5 +96,5 @@ const withSnacksFromGraphQL = graphql<
 
 /** The fully-wired home page, with  */
 export const HomePage = withApollo<Props>(
-  connectedToRedux(withSnacksFromGraphQL(HomePageUI))
+  connectedToRedux(withSnacksFromGraphQL(props => <HomePageUI {...props} />))
 );

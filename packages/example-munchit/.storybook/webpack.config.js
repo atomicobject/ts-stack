@@ -26,9 +26,9 @@ module.exports = (storybookBaseConfig, configType) => {
     },
     loaders.typescript,
     loaders.mjs,
-    loaders.graphql
+    loaders.graphql,
+    ...loaders.allImagesAndFontsArray
   );
-  storybookBaseConfig.module.rules.concat(loaders.allImagesAndFontsArray);
 
   storybookBaseConfig.resolve.extensions.push(".ts", ".tsx");
   storybookBaseConfig.resolve.modules.unshift(

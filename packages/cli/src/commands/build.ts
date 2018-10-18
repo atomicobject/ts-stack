@@ -1,26 +1,32 @@
 import { CommandGroup } from "../spawn";
 
 export const BUILD_COMMANDS: CommandGroup = {
-  "build:graphql:client:types": {
+  "build:graphql:schema:types": {
     cmd:
-      "cli build:graphql:client:types:gen; cli build:graphql:client:types:fmt",
+      "yarn build:graphql:server:types && cli build:graphql:schema:types:fmt",
     mode: "MANUAL"
   },
-  "build:graphql:client:types:gen": {
+  "build:graphql:schema:types:fmt": {
+    cmd: "prettier --write 'modules/graphql-api/schema-types.ts'",
+    mode: "MANUAL"
+  },
+  "build:graphql:client:types": {
     cmd:
-      "yarn apollo codegen:generate --queries='modules/client/**/*.graphql' --target=typescript --schema=./modules/graphql-api/schema.graphql",
+      "yarn build:graphql:client:types && cli build:graphql:client:types:fmt",
     mode: "MANUAL"
   },
   "build:graphql:client:types:fmt": {
-    cmd: "prettier --write 'modules/client/**/__generated__/**/*.ts'",
+    cmd: "prettier --write 'modules/client/graphql/types.tsx'",
     mode: "MANUAL"
   },
   "build:graphql:fmt": {
-    cmd: "concurrently 'cli build:graphql:client:types:fmt'",
+    cmd:
+      "concurrently 'cli build:graphql:schema:types:fmt' 'cli build:graphql:client:types:fmt'",
     mode: "MANUAL"
   },
   "build:graphql": {
-    cmd: "cli build:graphql:client:types"
+    cmd:
+      "concurrently 'cli build:graphql:schema:types' 'cli build:graphql:client:types'"
   },
   "build:client": { cmd: "webpack --config ./webpack/client.config.js" },
   "build:server": { cmd: "webpack --config ./webpack/server.config.js" }

@@ -1,8 +1,8 @@
 import DataLoader from "dataloader";
 import * as knex from "knex";
 
-import keyBy from "lodash.keyby"
-import groupBy from "lodash.groupby"
+import keyBy from "lodash.keyby";
+import groupBy from "lodash.groupby";
 
 export type Knex = knex;
 
@@ -51,12 +51,12 @@ export class LoaderFactory<
   ) {}
   findOneBy<K extends keyof SavedDestType>(targetKey: K) {
     return new DataLoader<SavedDestType[K], SavedDestType | null>(
-      async keyValues => {
+      async (keyValues: any) => {
         const entries: SavedDestType[] = await this.repo
           .table()
-          .whereIn(targetKey, keyValues as any);
+          .whereIn(targetKey as any, keyValues as any);
         const table = keyBy(entries, targetKey);
-        return keyValues.map(val => table[val.toString()] || null);
+        return keyValues.map((val: any) => table[val.toString()] || null);
       }
     );
   }
@@ -76,12 +76,12 @@ export class LoaderFactory<
           arg =>
             typeof arg === "object"
               ? ((arg as SourceRecord)[record.idKey] as IdType)
-              : arg
+              : (arg as any)
         );
         const records = await this.repo
           .table()
-          .whereIn(foreignKey, ids as any[]);
-        const table = groupBy<SavedDestType>(records, foreignKey);
+          .whereIn(foreignKey as any, ids as any[]);
+        const table = groupBy<SavedDestType>(records, foreignKey as any);
         const ordered = ids.map(id => table[(id as any).toString()] || []);
         return ordered;
       }
@@ -102,8 +102,10 @@ export class LoaderFactory<
             ? ((arg as SourceRecord)[record.idKey] as FkType)
             : arg
       );
-      const records = await this.repo.table().whereIn(foreignKey, ids as any[]);
-      const table = keyBy<SavedDestType>(records, foreignKey);
+      const records = await this.repo
+        .table()
+        .whereIn(foreignKey as any, ids as any[]);
+      const table = keyBy<SavedDestType>(records, foreignKey as any);
       const ordered = ids.map(id => table[(id as any).toString()]);
       return ordered;
     });
@@ -126,11 +128,11 @@ export class LoaderFactory<
           typeof arg === "object"
             ? ((arg as SavedSource)[sourceKey] as FkType)
             : arg
-      );
+      ) as any;
       const records = await this.repo
         .table()
-        .whereIn(idKeyOf(record), ids as any[]);
-      const table = keyBy<SavedDestType>(records, idKeyOf(record));
+        .whereIn(idKeyOf(record as any), ids as any[]);
+      const table = keyBy<SavedDestType>(records, idKeyOf(record as any));
       const ordered = ids.map(id => table[(id as any).toString()]);
       return ordered;
     });
@@ -165,7 +167,7 @@ export abstract class TableHelpers<
   async insert(unsaved: UnsavedR): Promise<SavedR> {
     const ids = await this.table().insert(
       this.prepToCreate(unsaved),
-      idKeyOf(this.recordType)
+      idKeyOf(this.recordType as any)
     );
     return Object.assign({}, unsaved, { id: ids[0] }) as any;
   }
@@ -204,7 +206,6 @@ export abstract class TableHelpers<
     return await this.table().count();
   }
 
-
   findById = new DataLoader<SavedR[IdKeyT], SavedR | undefined>(async ids => {
     const rows: SavedR[] = await this.table().whereIn("id", ids as any);
     const byId = keyBy(rows, "id");
@@ -213,9 +214,7 @@ export abstract class TableHelpers<
 }
 
 export interface RepositoryBase<U, S, Id extends keyof S>
-  extends TableHelpers<U, S, Id> {
-}
-
+  extends TableHelpers<U, S, Id> {}
 
 export function RepositoryBase<U, S, Id extends keyof S>(
   recordType: RecordInfo<U, S, Id>

@@ -203,7 +203,7 @@ export abstract class TableHelpers<
   }
 
   async count(): Promise<number> {
-    return await this.table().count();
+    return parseInt((await this.table().count())[0].count);
   }
 
   findById = new DataLoader<SavedR[IdKeyT], SavedR | undefined>(async ids => {
